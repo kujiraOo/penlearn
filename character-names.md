@@ -1,5 +1,6 @@
 # Character names
 
+```
 ; -- semicolon
 : -- colon
 * -- asterisk
@@ -21,3 +22,4 @@ _ -- underscore
 ... -- ellipsis
 ! -- exclamation mark
 ? -- question mark
+```
