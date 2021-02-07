@@ -71,6 +71,3 @@ const wow = {
 };
 
 functionWithDestructuring(wow);
-
-// Coming next
-const arrowFunction = (x) => x;
