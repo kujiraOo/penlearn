@@ -4,6 +4,6 @@
 
 // scope
 
-// string + regex
-
 // error handling
+
+// string + regex
