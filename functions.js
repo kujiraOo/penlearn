@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 function myFunction() {
   console.log('myFunction called this console.log');
 }
@@ -71,3 +72,7 @@ const wow = {
 };
 
 functionWithDestructuring(wow);
+
+// Coming next
+// eslint-disable-next-line no-unused-vars
+const arrowFunction = (x) => x;
