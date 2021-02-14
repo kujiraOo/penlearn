@@ -1,19 +1,24 @@
+/* eslint-disable no-console */
 // if statement
 
+// eslint-disable-next-line no-constant-condition
 if (true) {
   console.log('true');
 }
 
+// eslint-disable-next-line no-constant-condition
 if (false) {
   console.log('false');
 }
 
+// eslint-disable-next-line no-constant-condition
 if (false) {
   console.log('a');
 } else {
   console.log('b');
 }
 
+// eslint-disable-next-line no-constant-condition
 if (6 > 3) {
   console.log('6 > 3');
 }
@@ -26,10 +31,13 @@ if (isGreater) {
   console.log('isGreater');
 }
 
+// eslint-disable-next-line no-constant-condition
 if (false) {
   console.log('a');
+// eslint-disable-next-line no-constant-condition
 } else if (true) {
   console.log('b');
+// eslint-disable-next-line no-constant-condition
 } else if (true) {
   console.log('c');
 } else {
@@ -72,26 +80,35 @@ console.log(!!undefined);
 
 // comparison
 
+// eslint-disable-next-line no-self-compare
 console.log(1 === 1); // use this
 
+// eslint-disable-next-line no-self-compare
 console.log('{} === {}', {} === {}); // use this
 
+// eslint-disable-next-line no-self-compare, eqeqeq
 console.log(1 == 1); // don't use this
 
+// eslint-disable-next-line no-self-compare, eqeqeq
 console.log('{} == {}', {} == {}); // use this
 
+// eslint-disable-next-line eqeqeq
 console.log('1' == 1);
 
+// eslint-disable-next-line eqeqeq
 console.log([2] == 2);
 
-console.log('null == undefined', null == undefined);
+console.log('null == undefined', undefined == null);
 
 console.log('null == false', null == false);
 
+// eslint-disable-next-line eqeqeq
 console.log('undefined == false', undefined == false);
 
+// eslint-disable-next-line eqeqeq
 console.log('0 == false', 0 == false);
 
+// eslint-disable-next-line eqeqeq
 console.log('\'\' == false', '' == false);
 
 console.log('1 !== 2', 1 !== 2); // use this
@@ -100,6 +117,7 @@ console.log('2 > 1', 2 > 1);
 
 console.log('2 < 1', 2 < 1);
 
+// eslint-disable-next-line no-self-compare
 console.log('2 <= 2', 2 <= 2);
 
 console.log('2 >= 1', 2 >= 1);
@@ -132,6 +150,7 @@ console.log('7 && 8', 7 && 8); // if first is true returns second
 
 console.log('0 && 8', 0 && 8); // if first is false returns first
 
+// eslint-disable-next-line no-unused-vars
 const getName = (userData) => userData && userData.name; // null check
 
 // || - or
@@ -149,6 +168,7 @@ console.log('7 || 8', 7 || 8); // if first is true returns first
 console.log('0 || 8', 0 || 8); // if first is false returns second
 
 const sumWithDefault10Bad = (x, y) => {
+  // eslint-disable-next-line no-param-reassign
   y = y || 10;
 
   return x + y;
@@ -162,6 +182,7 @@ console.log(sumWithDefault10(1));
 
 // switch
 
+// eslint-disable-next-line no-unused-vars
 const dotaBot = (value) => {
   switch (value) {
     case 1: {
@@ -196,6 +217,7 @@ const getGopMessage = (value) => {
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const getPopMessage = (value) => {
   switch (value) {
     case 'net': {
@@ -219,6 +241,7 @@ console.log(bot('da', getGopMessage));
 
 // for loop
 
+// eslint-disable-next-line no-unused-vars
 const amazingBands = [
   'radiohead',
   'arctic monkeys',
@@ -231,6 +254,7 @@ const amazingBands = [
   'snarky puppy',
 ];
 
+// eslint-disable-next-line no-unused-vars
 const findIndex = (items, item) => {
   for (let i = 0; i < items.length; i += 1) {
     if (items[i] === item) {
@@ -242,7 +266,9 @@ const findIndex = (items, item) => {
 };
 
 // Doesn't work
+// eslint-disable-next-line no-unused-vars
 const findIndexWithForEach = (items, itemToFind) => {
+  // eslint-disable-next-line consistent-return
   items.forEach((item, index) => {
     if (item === itemToFind) {
       return index;
@@ -260,8 +286,10 @@ const findIndexWithForEach = (items, itemToFind) => {
 
 // ternary
 
+// eslint-disable-next-line no-constant-condition
 const ternaryTrue = true ? 'first' : 'second';
 
 console.log(ternaryTrue);
 
+// eslint-disable-next-line no-constant-condition, no-unused-vars
 const ternaryFalse = false ? 'first' : 'second';
