@@ -1,11 +1,15 @@
+/* eslint-disable no-console */
 // Arrays
 
+// eslint-disable-next-line no-unused-vars
 const a = []; // empty array
 
+// eslint-disable-next-line no-unused-vars
 const b = [1, 2, 3]; // not empty array of numbers
 
 const someConst = 23232;
 
+// eslint-disable-next-line no-unused-vars
 const c = [ // array containing different types
   1,
   'string',
@@ -30,8 +34,10 @@ const arrayToSpread = [{}, null, undefined, 3];
 
 // console.log(...{ a: 2 }); doesn't work with objects
 
+// eslint-disable-next-line no-unused-vars
 const shallowCopyArray = [...arrayToSpread];
 
+// eslint-disable-next-line no-unused-vars
 const sameArray = arrayToSpread;
 
 // console.log(arrayToSpread === shallowCopyArray);
@@ -52,6 +58,7 @@ const sameArray = arrayToSpread;
 
 // Multidimensional array
 
+// eslint-disable-next-line no-unused-vars
 const array2D = [
   [1, 2, 3],
   [4, 5, 6],
