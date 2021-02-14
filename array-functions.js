@@ -89,3 +89,22 @@ const numbers = [1, 2, 3, 2];
 const sum = numbers.reduce((acc, n) => acc + n, 0);
 
 console.log(sum);
+
+const findAbilityByName = (abilityName) => abilities
+  .find((ability) => ability.name === abilityName);
+
+const hellFuryAbility = findAbilityByName('Hell Fury');
+
+console.log(hellFuryAbility);
+
+// filter
+
+const filterAbilitiesByDamage = (minDamage) => abilities
+  .filter((ability) => ability.damage >= minDamage);
+
+console.log(filterAbilitiesByDamage(3));
+
+const sortByDamageWithoutMutation = (abilitiesToSort) => [...abilitiesToSort]
+  .sort((ability1, ability2) => ability1.damage - ability2.damage);
+
+console.log(sortByDamageWithoutMutation(abilities));
