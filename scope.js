@@ -24,6 +24,7 @@ const someFunction = () => {
   console.log(a);
 
   // declared in function scope, not visible outside function
+  // eslint-disable-next-line no-unused-vars
   const b = 40;
 };
 
