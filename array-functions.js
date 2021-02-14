@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const abilities = [
   {
     id: 'abl1',
@@ -68,6 +70,7 @@ const notNestedNumbers = nestedNumbers.flatMap((a) => a.map(double));
 
 console.log(notNestedNumbers);
 
+// eslint-disable-next-line no-unused-vars
 const abilitiesById = abilities.reduce(
   (byId, ability) => ({
     ...byId,
