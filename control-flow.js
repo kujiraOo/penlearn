@@ -160,4 +160,108 @@ const sumWithDefault10 = (x, y = 10) => x + y;
 
 console.log(sumWithDefault10(1));
 
-// switch, for loop, ternary, array.find, array.sort, array.filter
+// switch
+
+const dotaBot = (value) => {
+  switch (value) {
+    case 1: {
+      console.log('huy');
+      break;
+    }
+    case 2: {
+      console.log('pidor');
+      break;
+    }
+    case 3: {
+      console.log('mamku ebal');
+      break;
+    }
+    default: {
+      console.log('ya livayu');
+    }
+  }
+};
+
+const getGopMessage = (value) => {
+  switch (value) {
+    case 'net': {
+      return 'a esli naidu';
+    }
+    case 'da': {
+      return 'bykanut\'';
+    }
+    default: {
+      return 'sil\'no bykanut\'';
+    }
+  }
+};
+
+const getPopMessage = (value) => {
+  switch (value) {
+    case 'net': {
+      return 'vo slavu satany';
+    }
+    case 'da': {
+      return 'ot podrugi do raya';
+    }
+    default: {
+      return 'dai deneg';
+    }
+  }
+};
+
+// bad callback example jacob collier is the best
+const bot = (command, messageGetter) => {
+  console.log(messageGetter(command));
+};
+
+console.log(bot('da', getGopMessage));
+
+// for loop
+
+const amazingBands = [
+  'radiohead',
+  'arctic monkeys',
+  'oomori seiko',
+  'mitya berkhin',
+  'mooncake',
+  'suraev',
+  'gruppa teh pazanov kotorye vyshli s rikenbackerami po 2k za kajdyi kak budto igrali v pervyi raz muzyku i drug s drugom',
+  'jacob collier',
+  'snarky puppy',
+];
+
+const findIndex = (items, item) => {
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i] === item) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+
+// Doesn't work
+const findIndexWithForEach = (items, itemToFind) => {
+  items.forEach((item, index) => {
+    if (item === itemToFind) {
+      return index;
+    }
+  });
+
+  return -1;
+};
+
+// console.log('index', findIndex(amazingBands, 'jacob collier'));
+
+// console.log('index with forEach', findIndexWithForEach(amazingBands, 'jacob collier'));
+
+// ternary, array.find, array.filter, array.sort
+
+// ternary
+
+const ternaryTrue = true ? 'first' : 'second';
+
+console.log(ternaryTrue);
+
+const ternaryFalse = false ? 'first' : 'second';
