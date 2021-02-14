@@ -1,4 +1,7 @@
-const emptyObject = {};// прото пустой объект без всего
+/* eslint-disable no-console */
+
+// eslint-disable-next-line no-unused-vars
+const emptyObject = {};// an empty object
 
 const notEmptyObject = {
   a: 4, // assigning a value (property of the object)
@@ -18,13 +21,26 @@ const nestedObject = { // object with object in it and number and string in obje
 };
 
 // Accessing properties of an object
-const something = notEmptyObject.c; // 'some string', accessing a value. something get 'some string' value, also it is variables and get his own house in memory
-const somethingNested = nestedObject.anotherProp.moreNestedProperty; // {}, accessing a nested property. same with previous but get (access) some nested property
 
-const { someProp } = nestedObject; // if you want to create variables with same name as property of already created object you can use this way
+// 'some string', accessing a value. something get 'some string' value,
+// also it is variables and get his own house in memory
+// eslint-disable-next-line no-unused-vars
+const something = notEmptyObject.c;
+
+// {}, accessing a nested property. same with previous but get (access) some nested property
+// eslint-disable-next-line no-unused-vars
+const somethingNested = nestedObject.anotherProp.moreNestedProperty;
+
+// if you want to create variables with same name as property of already created object you can use
+// this way
+// eslint-disable-next-line no-unused-vars
+const { someProp } = nestedObject;
+// eslint-disable-next-line no-unused-vars
 const { anotherProp } = nestedObject;
 
-const veryAnotherProp = nestedObject.veryAnotherProp; // same as const { veryAnotherProp } = nestedObject;
+// same as const { veryAnotherProp } = nestedObject;
+// eslint-disable-next-line prefer-destructuring, no-unused-vars
+const veryAnotherProp = nestedObject.veryAnotherProp;
 
 // Assigning values to properties of an object
 notEmptyObject.c = 'another value'; // re-assigning value of the property. change value of c of notEmptyObject to another value
@@ -33,12 +49,13 @@ const amazingValue = 10; // new variables
 const anotherAmazingValue = 20;
 
 const amazingObject = {
-  amazingValue, // look here bitch, its simple way
-  b: anotherAmazingValue, // look here bitch its not simple way
+  amazingValue, // shorthand assignment
+  b: anotherAmazingValue, // regular assignment
   someObjectHere: { a: 3 }, // its just an object
-  d: 5
+  d: 5,
 }; // create object with 10 , 20 , and object with 3
 
+// eslint-disable-next-line no-unused-vars
 const objectWithSpread = {
   something: 3,
   ...amazingObject, // spreading an object
@@ -53,12 +70,9 @@ const copyOfAmazingObject = {
   someObjectHere: { ...amazingObject.someObjectHere },
 }; // different address in memory
 
-const bitch = amazingObject
-const {someObjectHere} = amazingObject
+const { someObjectHere } = amazingObject;
 someObjectHere.a = 4;
 amazingObject.d = 6;
-
-//console.log(amazingObject, shallowCopyOfAmazingObject, copyOfAmazingObject,someObjectHere,bitch);
 
 const anotherObjectHere = amazingObject.someObjectHere; // same with 57 line
 const copyOfSomeObjectHere = { ...anotherObjectHere }; // spreading like shallowCopy
@@ -71,20 +85,22 @@ copyOfSomeObjectHere.a = 6;
 
 // console.log('anotherObjectHere', anotherObjectHere);
 // console.log('amazingObject.someObjectHere', amazingObject.someObjectHere);
-// console.log('shallowCopyOfAmazingObject.someObjectHere', shallowCopyOfAmazingObject.someObjectHere);
 // console.log('copyOfAmazingObject.someObjectHere', copyOfAmazingObject.someObjectHere);
 // console.log('copyOfSomeObjectHere', copyOfSomeObjectHere);
 
 const weirdPropertyName = 'some space here'; // new variable with string
 
+// eslint-disable-next-line no-unused-vars
 const objectWithWeirdPropertyNames = {
   [weirdPropertyName]: 'ok', // create KEY with same name as value of variables
+  // eslint-disable-next-line no-useless-computed-key
   [4]: 'ofrfr',
-  ['ok'] : 'not ok'
+  // eslint-disable-next-line no-useless-computed-key
+  ['ok']: 'not ok',
 };
 // COMMON OBJECT FUNCTIONS / KEYWORDS
 
-//console.log(objectWithWeirdPropertyNames);
+// console.log(objectWithWeirdPropertyNames);
 
 const objectWithPropertyToDelete = { propertyToDelete: 'delete me' };
 
@@ -99,18 +115,18 @@ objectWithPropertyToDelete.propertyToNotDelete2 = 'don\'t delete';
 objectWithPropertyToDelete.propertyToNotDelete3 = 'don\'t delete';
 
 const objectWithKeys = {
-  a : [1,2,3,4],
+  a: [1, 2, 3, 4],
   b: 4,
   nyaaa: 5,
   nyaaa2: 'some string',
 };
 
-const keysOfObjectWithKeys = Object.keys(objectWithKeys); //call to "white" keys
+const keysOfObjectWithKeys = Object.keys(objectWithKeys); // call to "white" keys
 
-const valuesOfObjectWithKeys = Object.values(objectWithKeys); //call to values of properties
+const valuesOfObjectWithKeys = Object.values(objectWithKeys); // call to values of properties
 
 objectWithKeys.a[10] = 'anything';
 objectWithKeys.a[6] = undefined;
-console.log(objectWithKeys,keysOfObjectWithKeys,valuesOfObjectWithKeys);
-console.log(objectWithKeys.a[6])
+console.log(objectWithKeys, keysOfObjectWithKeys, valuesOfObjectWithKeys);
+console.log(objectWithKeys.a[6]);
 console.log(objectWithKeys.a.length);
