@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 function GameObject() {}
 
 GameObject.prototype.init = function init(name, position) {
