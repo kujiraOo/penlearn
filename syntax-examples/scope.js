@@ -4,7 +4,7 @@
 const fs = require('fs');
 
 // require things defined in another file
-const math = require('../math');
+const math = require('./math');
 
 console.log(math);
 
