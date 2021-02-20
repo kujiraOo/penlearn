@@ -10,6 +10,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  rules: {
+  globals: {
+    describe: 'readonly',
+    test: 'readonly',
+    expect: 'readonly',
   },
 };
