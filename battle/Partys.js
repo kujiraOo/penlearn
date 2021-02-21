@@ -1,7 +1,17 @@
-let Create = require('./Unit');
-//let Alies = [];
-//let Enemy = [];
+const Create = require('./unit');
 
-//Allies = Alies.push(Create.CreateAlly('Hero', 20, 10, 5, 10, 10));
+function RandomForUnit(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min
+};
 
-console.log(Create);
+let Alies = [];
+let Enemy = [];
+
+Allies = Alies.push(Create.CreateAlly('Hero', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
+Allies = Alies.push(Create.CreateAlly('Hero', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
+Allies = Alies.push(Create.CreateAlly('Hero', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
+Allies = Alies.push(Create.CreateAlly('Hero', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
+
+console.log(Alies);
