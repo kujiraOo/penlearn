@@ -14,6 +14,7 @@ const CreateEnemy = (name, hp, mp, agl, dmg, def) => {
 //console.log(CreateEnemy('Golem ', 35, 0, 1, 5, 2));
 
 module.exports = {
+  id,
   CreateAlly,
   CreateEnemy,
 };
