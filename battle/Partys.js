@@ -1,18 +1,45 @@
-const Create = require('./unit');
+const create = require('./create');
 
-function RandomForUnit(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min
+const idGenerator = () => {
+  let generatedId = 0;
+
+  return () => {
+    generatedId += 1;
+
+    return generatedId;
+  };
 };
 
-let Alies = [];
-let Enemy = [];
+const createAllies = (nextId) => [
+  create.createUnit(
+    nextId(),
+    'Penguin',
+  ),
+  create.createUnit(
+    nextId(),
+    'Sawa',
+  ),
+  create.createUnit(
+    nextId(),
+    'Natasha',
+  ),
+];
 
-Allies = Alies.push(Create.CreateAlly('Hero1', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
-Allies = Alies.push(Create.CreateAlly('Hero2', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
-Allies = Alies.push(Create.CreateAlly('Hero3', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
-Allies = Alies.push(Create.CreateAlly('Hero4', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
+const createEnemies = (nextId) => [
+  create.createUnit(
+    nextId(),
+    'Golem',
+  ),
+  create.createUnit(
+    nextId(),
+    'Golem Lord',
+  ),
+  create.createUnit(
+    nextId(),
+    'Lord of Golem Lords',
+  ),
+];
 
-Enemy = Enemy.push(Create.CreateEnemy('Hero1', RandomForUnit(10, 25), RandomForUnit(5, 10), RandomForUnit(6, 20), RandomForUnit(10, 20), RandomForUnit(0, 15)));
-console.log(Alies, Enemy);
+const nextId = idGenerator();
+
+console.log(createAllies(nextId), createEnemies(nextId));
