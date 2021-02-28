@@ -18,5 +18,3 @@ module.exports = {
   randomDmg,
   randomDef,
 };
-
-// console.log(nextid())

@@ -10,8 +10,4 @@ const createUnit = (id, name) => ({
   def: random.randomDef(),
 });
 
-// console.log(createUnit('Hero', 20, 10, 5, 10, 10));
-
-module.exports = {
-  createUnit,
-};
+module.exports = createUnit;
