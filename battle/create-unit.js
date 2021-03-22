@@ -10,7 +10,7 @@ const createUnit = (id, name) => {
   agl: rngAgl,
   dmg: random.randomDmg(),
   def: random.randomDef(),
-  movepoints: rngAgl,
+    movePoints: rngAgl,
 })};
 
 module.exports = createUnit;
