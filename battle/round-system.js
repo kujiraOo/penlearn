@@ -7,13 +7,17 @@ const alliedParty = newParty.createAllies(nextId);
 
 const enemyParty = newParty.createEnemies(nextId);
 
-const turnCreate = (team1) => team1.map(({ id, name, agl }) => ({ id, name, move }));
+const turnCreate = (team1) => team1.map(({ id, name, movePoints }) => ({ id, name, movePoints }));
 
 const turnLog = [...turnCreate(alliedParty), ...turnCreate(enemyParty)];
 
-console.log(turnLog);
+const pickUnitWithMaxMovepoints = (turnLogToSort) => turnLogToSort.sort(
+  (movePoints1, movePoints2) => movePoints2.movePoints - movePoints1.movePoints,
+);
 
-/*console.log(turnLog(alliedParty));
+console.log(pickUnitWithMaxMovepoints(turnLog));
+
+/* console.log(turnLog(alliedParty));
 
 console.log(alliedParty);
 
@@ -40,4 +44,4 @@ console.log(numbers)
 ];
 const arrayWithTwoStrings = names.map(({ firstName, lastName }) => firstName + lastName);
 
-console.log(arrayWithTwoStrings);*/
+console.log(arrayWithTwoStrings); */
