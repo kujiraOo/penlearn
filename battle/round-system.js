@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const newParty = require('./party');
 const idGenerator = require('./id-generator');
 
@@ -87,30 +88,25 @@ const calculateMovepoints = (units, movingUnitId) => {
   return newUnitsArray;
 };
 
-const restoreMovepoints = (units) => {
-  const newUnitsArray = units.map(copyUnit);
-  newUnitsArray.forEach((element) => {
-    element.movePoints += element.agl;
-  });
-  return newUnitsArray;
-};
+const restoreMovepoints = (units) => units
+  .map((unit) => ({ ...unit, movePoints: unit.movePoints + unit.agl }));
 
 const unitsHaveEnoughMovepoints = (units) => !!units.find((unit) => unit.movePoints >= moveCost);
 
-const calculateTurn = (units) => {
+/* const calculateTurn = (units) => {
   console.log(units.map(unitToTurnLogItem));
   const unit = pickUnitWithMaxMovepoints(units);
   console.log(unit);
-  /* if (!unitHasEnoughMovepoints(unit)) {
+   if (!unitHasEnoughMovepoints(unit)) {
     const restoredUnits = restoreMovepoints(units);
     const pickedRestoredUnit = pickUnitWithMaxMovepoints(restoredUnits);
     calculateMovepoints(restoredUnits, pickedRestoredUnit.id);
     return pickedRestoredUnit;
   }
-  */
+
   calculateMovepoints(units, unit.id);
   return unit;
-};
+}; */
 
 const turnQueue = (units) => {
   const queue = [];
