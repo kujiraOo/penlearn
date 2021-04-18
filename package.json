@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "lint": "eslint syntax-examples/**/*.js battle/**/*.js *.js" 
+    "lint": "eslint syntax-examples/**/*.js battle/**/*.js *.js"
   },
   "author": "",
   "license": "ISC",
