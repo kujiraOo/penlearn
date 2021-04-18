@@ -2,65 +2,12 @@ const moveCost = 6;
 
 const turnQueueLength = 12;
 
-const alliedParty = [{
-  id: 1,
-  name: 'Penguin',
-  hp: 33,
-  mp: 0,
-  agl: 17,
-  dmg: 7,
-  def: 3,
-  movePoints: 17,
-},
-{
-  id: 2,
-  name: 'Sawa',
-  hp: 28,
-  mp: 16,
-  agl: 21,
-  dmg: 9,
-  def: 0,
-  movePoints: 21,
-}];
-
-const enemyParty = [{
-  id: 3,
-  name: 'Golem',
-  hp: 35,
-  mp: 0,
-  agl: 8,
-  dmg: 3,
-  def: -3,
-  movePoints: 8,
-},
-{
-  id: 4,
-  name: 'Golem Lord',
-  hp: 70,
-  mp: 1,
-  agl: 10,
-  dmg: 6,
-  def: -6,
-  movePoints: 10,
-}];
-
-const unitToTurnLogItem = ({
-  id, name, agl, movePoints,
-}) => ({
-  id, name, agl, movePoints,
-});
-
 const copyObject = (object) => ({ ...object });
-
-const turnLog = [...alliedParty.map(copyObject), ...enemyParty.map(copyObject)];
 
 const sortUnitsByMovePoints = (units) => [...units]
   .sort((unit1, unit2) => unit2.movePoints - unit1.movePoints);
 
-const pickUnitWithMaxMovePoints = (units) => {
-  sortUnitsByMovePoints(units);
-  return units[0];
-};
+const pickUnitWithMaxMovePoints = (units) => sortUnitsByMovePoints(units)[0];
 
 const calculateMovePoints = (units, movingUnitId) => {
   const newUnitArray = units.map(copyObject);
@@ -88,4 +35,6 @@ const turnQueue = (units) => {
   return queue;
 };
 
-console.log(turnQueue(turnLog).map(unitToTurnLogItem), turnLog);
+module.exports = {
+  turnQueue,
+};
