@@ -10,7 +10,7 @@ const createUnit = (id, name) => {
     agl,
     dmg: random.randomDmg(),
     def: random.randomDef(),
-    movePoints: aglRng,
+    movePoints: agl,
   });
 };
 

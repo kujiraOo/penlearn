@@ -89,4 +89,4 @@ const turnQueue = (units) => {
   return queue;
 };
 
-console.log(turnQueue(turnLog).map(unitToTurnLogItem));
+console.log(turnQueue(turnLog).map(unitToTurnLogItem), turnLog);
