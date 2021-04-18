@@ -1,13 +1,13 @@
 const random = require('./random');
 
 const createUnit = (id, name) => {
-  const aglRng = random.randomAgl();
+  const agl = random.randomAgl();
   return ({
     id,
     name,
     hp: random.randomHp(),
     mp: random.randomMp(),
-    agl: aglRng,
+    agl,
     dmg: random.randomDmg(),
     def: random.randomDef(),
     movePoints: aglRng,
