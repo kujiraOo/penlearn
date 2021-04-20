@@ -1,6 +1,6 @@
 const units = [{
   id: 1,
-  name: 'Penguin tank',
+  name: 'Penguin',
   hp: 120,
   def: 12,
   attack: 21,
@@ -10,7 +10,7 @@ const units = [{
 },
 {
   id: 2,
-  name: 'Sawa bulka for wind strike',
+  name: 'Sawa',
   hp: 100,
   def: 6,
   attack: -12,
