@@ -37,4 +37,11 @@ const turnQueue = (units) => {
 
 module.exports = {
   turnQueue,
+  unitsHaveEnoughMovePoints,
+  restoreMovePoints,
+  calculateMovePoints,
+  pickUnitWithMaxMovePoints,
+  sortUnitsByMovePoints,
+  moveCost,
+  turnQueueLength,
 };
