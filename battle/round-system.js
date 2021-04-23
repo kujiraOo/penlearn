@@ -9,12 +9,13 @@ const sortUnitsByMovePoints = (units) => [...units]
 
 const pickUnitWithMaxMovePoints = (units) => sortUnitsByMovePoints(units)[0];
 
-const calculateMovePoints = (units, movingUnitId) => {
+const updateMovePoints = (units, movingUnitId) => {
   const newUnitArray = units.map(copyObject);
   const unit = newUnitArray.find((element) => element.id === movingUnitId);
   unit.movePoints -= moveCost;
   return newUnitArray;
 };
+
 
 const restoreMovePoints = (units) => units
   .map((unit) => ({ ...unit, movePoints: unit.movePoints + unit.agl }));
@@ -30,7 +31,7 @@ const turnQueue = (units) => {
     }
     const unit = pickUnitWithMaxMovePoints(tempUnits);
     queue.push(unit);
-    tempUnits = calculateMovePoints(tempUnits, unit.id);
+    tempUnits = updateMovePoints(tempUnits, unit.id);
   }
   return queue;
 };
@@ -39,7 +40,7 @@ module.exports = {
   turnQueue,
   unitsHaveEnoughMovePoints,
   restoreMovePoints,
-  calculateMovePoints,
+  updateMovePoints,
   pickUnitWithMaxMovePoints,
   sortUnitsByMovePoints,
   moveCost,
