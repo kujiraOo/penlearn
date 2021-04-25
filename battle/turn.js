@@ -1,3 +1,4 @@
+const { updateUnits } = require('./helpers');
 const { selectAttackTarget } = require('./ai');
 const {
   unitsHaveEnoughMovePoints,
@@ -6,10 +7,6 @@ const {
   pickUnitWithMaxMovePoints,
 } = require('./round-system');
 const { attack } = require('./abilities');
-
-const updateUnits = (units, updatedUnits) => units.map((unit) => (
-  { ...(updatedUnits.find((u) => unit.id === u.id) || unit) }
-));
 
 const turn = (units) => {
   const tempUnitsInBattle = unitsHaveEnoughMovePoints(units)
