@@ -1,3 +1,5 @@
+const { updateUnits } = require('./helpers');
+
 const moveCost = 6;
 
 const turnQueueLength = 12;
@@ -9,13 +11,9 @@ const sortUnitsByMovePoints = (units) => [...units]
 
 const pickUnitWithMaxMovePoints = (units) => sortUnitsByMovePoints(units)[0];
 
-const updateMovePoints = (units, movingUnitId) => {
-  const newUnitArray = units.map(copyObject);
-  const unit = newUnitArray.find((element) => element.id === movingUnitId);
-  unit.movePoints -= moveCost;
-  return newUnitArray;
-};
-
+const updateMovePoints = (unit) => ({
+  ...unit, movePoints: unit.movePoints - moveCost,
+});
 
 const restoreMovePoints = (units) => units
   .map((unit) => ({ ...unit, movePoints: unit.movePoints + unit.agl }));
@@ -26,12 +24,13 @@ const turnQueue = (units) => {
   const queue = [];
   let tempUnits = units;
   for (let i = 0; i < turnQueueLength; i += 1) {
-    if (!unitsHaveEnoughMovePoints(tempUnits)) {
-      tempUnits = restoreMovePoints(tempUnits);
-    }
+    tempUnits = unitsHaveEnoughMovePoints(tempUnits)
+      ? tempUnits
+      : restoreMovePoints(tempUnits);
+
     const unit = pickUnitWithMaxMovePoints(tempUnits);
     queue.push(unit);
-    tempUnits = updateMovePoints(tempUnits, unit.id);
+    tempUnits = updateUnits(tempUnits, [updateMovePoints(unit)]);
   }
   return queue;
 };
