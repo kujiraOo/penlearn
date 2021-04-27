@@ -2,9 +2,9 @@ const { turn } = require('./turn');
 
 const isBattleOver = (units) => !units.find((unit) => unit.partyId !== units[0].partyId);
 
-const battle = (allies, foes) => {
+const battle = (party1, party2) => {
   const turnLog = [];
-  let units = [...allies, ...foes];
+  let units = [...party1, ...party2];
 
   while (!isBattleOver(units)) {
     const turnResult = turn(units);
