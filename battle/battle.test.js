@@ -18,7 +18,7 @@ describe('battle', () => {
         name: 'Sawa',
         hp: 100,
         def: 6,
-        attack: -12,
+        attack: 12,
         agl: 21,
         movePoints: 21,
         partyId: 'Allies',
@@ -50,8 +50,6 @@ describe('battle', () => {
 
     console.log(turnLog);
 
-    expect(turnLog).toMatchObject([
-
-    ]);
+    expect(turnLog).toMatchSnapshot();
   });
 });

@@ -16,7 +16,7 @@ const turn = (units) => {
   const actorAfter = updateMovePoints(actor);
   const target = selectAttackTarget(actor, tempUnitsInBattle);
   const targetAfter = attack(actor, target);
-  const updatedUnits = updateUnits(units, [targetAfter, actorAfter])
+  const updatedUnits = updateUnits(tempUnitsInBattle, [targetAfter, actorAfter])
     .filter((unit) => unit.hp > 0);
 
   return {
