@@ -4,8 +4,6 @@ const moveCost = 6;
 
 const turnQueueLength = 12;
 
-const copyObject = (object) => ({ ...object });
-
 const sortUnitsByMovePoints = (units) => [...units]
   .sort((unit1, unit2) => unit2.movePoints - unit1.movePoints);
 

@@ -48,8 +48,6 @@ describe('battle', () => {
     ];
     const turnLog = battle(allies, foes);
 
-    console.log(turnLog);
-
     expect(turnLog).toMatchSnapshot();
   });
 });
