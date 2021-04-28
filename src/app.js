@@ -4,7 +4,7 @@ const port = 3000;
 const app = new Koa();
 
 app.use(async (ctx) => {
-  ctx.body = 'Hello World';
+  ctx.body = 'BATTLE!11';
 });
 
 app.listen(port, () => {
