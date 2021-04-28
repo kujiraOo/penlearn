@@ -4,6 +4,7 @@
   "description": "learn learn",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "test": "jest",
     "test-watch": "jest --watch",
     "lint": "eslint syntax-examples/**/*.js battle/**/*.js *.js"
@@ -15,5 +16,8 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "koa": "^2.13.1"
   }
 }
