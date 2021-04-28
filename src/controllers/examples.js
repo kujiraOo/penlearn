@@ -1,14 +1,20 @@
 const Router = require('@koa/router');
 
-const { randomHp } = require('../random');
+const { random } = require('../random');
 
-const router = new Router({ prefix: '/examples' });
-
-router
+module.exports = new Router({ prefix: '/examples' })
   .post('/random-hp', (ctx) => {
+    const { minHp, maxHp } = ctx.request.body;
+
+    if (typeof minHp !== 'number') {
+      ctx.throw(400, 'minHp must be a number');
+    }
+
+    if (typeof maxHp !== 'number') {
+      ctx.throw(400, 'maxHp must be a number');
+    }
+
     ctx.body = {
-      randomHp: randomHp(),
+      randomHp: random(minHp, maxHp),
     };
   });
-
-module.exports = router;
