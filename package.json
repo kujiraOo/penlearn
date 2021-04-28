@@ -7,7 +7,7 @@
     "start": "nodemon ./src/app.js",
     "test": "jest",
     "test-watch": "jest --watch",
-    "lint": "eslint syntax-examples/**/*.js battle/**/*.js *.js"
+    "lint": "eslint src/**/*.js"
   },
   "author": "",
   "license": "ISC",
