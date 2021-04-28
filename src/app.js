@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
 const Router = require('@koa/router');
 
 const examples = require('./controllers/examples');
@@ -12,6 +13,8 @@ router.use(
   examples.routes(),
   examples.allowedMethods(),
 );
+
+app.use(bodyParser());
 
 app.use(
   router.routes(),
