@@ -7,5 +7,5 @@ module.exports = {
     `,
     values: [min, max, value],
   }),
-  selectMany: 'select id, value from random_numbers',
+  selectAll: 'select id, value from random_numbers',
 };

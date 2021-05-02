@@ -5,7 +5,7 @@ const randomNumbers = require('../db/random-number');
 
 module.exports = new Router({ prefix: '/random-numbers' })
   .get('/', async (ctx) => {
-    const { rows } = await ctx.dbPool.query(randomNumbers.selectMany);
+    const { rows } = await ctx.dbPool.query(randomNumbers.selectAll);
 
     ctx.body = rows;
   })
