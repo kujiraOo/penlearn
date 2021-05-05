@@ -4,6 +4,7 @@ const {
   killableEnemies,
   findEnemies,
   findAlly,
+  enemiesActBeforeTarget,
 } = require('./ai');
 
 describe('selectAttackTarget', () => {
@@ -85,7 +86,7 @@ describe('selectAttackTarget', () => {
     }]);
   });
 
-  test('returns correct ally', () => {
+  test('returns correct ally that suppose to die', () => {
     const allies = [{
       id: 1,
       name: 'Penguin',
@@ -144,6 +145,69 @@ describe('selectAttackTarget', () => {
         movePoints: 12,
         partyId: 'Allies',
       },
+    );
+  });
+  test('returns enemy that turn before ally', () => {
+    const allies = [{
+      id: 1,
+      name: 'Penguin',
+      hp: 1,
+      def: 0,
+      attack: 21,
+      agl: 12,
+      movePoints: 12,
+      partyId: 'Allies',
+    },
+    {
+      id: 2,
+      name: 'Sawa',
+      hp: 100,
+      def: 6,
+      attack: 9999,
+      agl: 21,
+      movePoints: 21,
+      partyId: 'Allies',
+    },
+    ];
+    const foes = [{
+      id: 3,
+      name: 'Sadomasochist Golem',
+      hp: 35,
+      def: -3,
+      attack: 12,
+      agl: 8,
+      movePoints: 8,
+      partyId: 'Foes',
+    },
+    {
+      id: 4,
+      name: 'Golem Lord',
+      hp: 50,
+      def: 3,
+      attack: 18,
+      agl: 14,
+      movePoints: 14,
+      partyId: 'Foes',
+    }];
+    const testUnits = [...allies, ...foes];
+
+    const sawa = allies[1];
+
+    const ally = findAlly(sawa, testUnits);
+
+    const enemyTurnsBeforeAlly = enemiesActBeforeTarget(ally, testUnits);
+
+    expect(enemyTurnsBeforeAlly).toMatchObject(
+      [{
+        id: 4,
+        name: 'Golem Lord',
+        hp: 50,
+        def: 3,
+        attack: 18,
+        agl: 14,
+        movePoints: 14,
+        partyId: 'Foes',
+      }],
     );
   });
 });
