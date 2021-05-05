@@ -4,15 +4,15 @@ const Router = require('@koa/router');
 
 const dbPool = require('./db/db-pool');
 const dbPoolMiddleware = require('./middleware/db-pool-middleware');
-const examples = require('./controllers/random-numbers');
+const randomNumbers = require('./controllers/random-numbers');
 
 const port = 3000;
 const app = new Koa();
 const router = new Router({ prefix: '/api' });
 
 router.use(
-  examples.routes(),
-  examples.allowedMethods(),
+  randomNumbers.routes(),
+  randomNumbers.allowedMethods(),
 );
 
 app.use(dbPoolMiddleware(dbPool()));
