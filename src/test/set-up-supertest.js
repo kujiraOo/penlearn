@@ -3,20 +3,17 @@ const supertest = require('supertest');
 const initApp = require('../app');
 const initDbPool = require('../db/db-pool');
 
-const setUpSuperTest = () => {
-  const pool = initDbPool();
-  const app = initApp(pool).listen();
+module.exports = () => {
+  const dbPool = initDbPool();
+  const app = initApp(dbPool).listen();
   const request = supertest(app);
 
   return {
     request,
+    dbPool,
     tearDown: () => {
       app.close();
-      pool.end();
+      dbPool.end();
     },
   };
-};
-
-module.exports = {
-  setUpSuperTest,
 };
