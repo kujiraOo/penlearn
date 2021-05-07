@@ -6,6 +6,9 @@ const findEnemies = (actor, units) => units
 const findAlly = (actor, units) => units
   .find((unit) => unit.partyId === actor.partyId && unit.id !== actor.id);
 
+const findAllies = (actor, units) => units
+  .filter((u) => u.partyId === actor.partyId && u.id !== actor.id);
+
 const selectTargetWithLowestHp = (enemies) => {
   const targets = enemies.sort((unit1, unit2) => unit1.hp - unit2.hp);
 
@@ -39,9 +42,13 @@ const targetEnemyBeforeAllyDeath = (actor, units) => {
 
 const selectAttackTarget = (actor, units) => {
   const enemies = findEnemies(actor, units);
-  const target = selectTargetWithLowestHp(enemies);
+  const allies = findAllies(actor, units);
+  if (killableEnemies(actor, enemies).length > 0 && allies.length > 0) {
+    const target = targetEnemyBeforeAllyDeath(actor, units);
+    if (target) return target;
+  }
 
-  return target;
+  return selectTargetWithLowestHp(enemies);
 };
 
 module.exports = {
@@ -53,3 +60,17 @@ module.exports = {
   enemiesActBeforeTarget,
   enemiesThatCanKillAlly,
 };
+
+/* const searchTargetPreparation = (units) => {
+  const queue = turnQueue(units);
+  const actor = queue[0];
+  const ally = findAlly(actor, queue);
+  const enemies = findAlly(actor, queue);
+  const targetIfEnemiesCanKillAlly = enemiesThatCanKillAlly(ally, units);
+  const enemyWithLowestHP = selectTargetWithLowestHp(enemies);
+  const target = targetIfEnemiesCanKillAlly.length > 0
+    ? targetIfEnemiesCanKillAlly
+    : enemyWithLowestHP;
+  return target;
+};
+*/
