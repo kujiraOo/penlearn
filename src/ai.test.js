@@ -4,7 +4,7 @@ const {
   killableEnemies,
   findEnemies,
   findAlly,
-  enemiesActBeforeTarget,
+  targetEnemyBeforeAllyDeath,
 } = require('./ai');
 
 describe('selectAttackTarget', () => {
@@ -147,7 +147,7 @@ describe('selectAttackTarget', () => {
       },
     );
   });
-  test('returns enemy that turn before ally', () => {
+  test('returns enemy that turn before ally,can kill him and killable by actor', () => {
     const allies = [{
       id: 1,
       name: 'Penguin',
@@ -193,12 +193,10 @@ describe('selectAttackTarget', () => {
 
     const sawa = allies[1];
 
-    const ally = findAlly(sawa, testUnits);
-
-    const enemyTurnsBeforeAlly = enemiesActBeforeTarget(ally, testUnits);
+    const enemyTurnsBeforeAlly = targetEnemyBeforeAllyDeath(sawa, testUnits);
 
     expect(enemyTurnsBeforeAlly).toMatchObject(
-      [{
+      {
         id: 4,
         name: 'Golem Lord',
         hp: 50,
@@ -207,7 +205,7 @@ describe('selectAttackTarget', () => {
         agl: 14,
         movePoints: 14,
         partyId: 'Foes',
-      }],
+      },
     );
   });
 });

@@ -30,8 +30,7 @@ const enemiesThatCanKillAlly = (ally, units) => enemiesActBeforeTarget(ally, uni
 
 const targetEnemyBeforeAllyDeath = (actor, units) => {
   const ally = findAlly(actor, units);
-  const supposedEnemies = enemiesActBeforeTarget(ally, units);
-  const killers = enemiesThatCanKillAlly(ally, supposedEnemies);
+  const killers = enemiesThatCanKillAlly(ally, units);
   const sortedKillersArray = killableEnemies(actor, killers)
     .sort((e1, e2) => e1.movePoints - e2.movePoints);
 
@@ -52,9 +51,16 @@ module.exports = {
   targetEnemyBeforeAllyDeath,
   findAlly,
   enemiesActBeforeTarget,
+  enemiesThatCanKillAlly,
 };
 
-/* const target = units
-    .filter((u) => u.partyId !== actor.partyId)
-    .sort((unit1, unit2) => unit1.hp - unit2.hp);
- */
+const searchTargetPreparation = (units) => {
+  const queue = turnQueue(units);
+  const actor = queue[0];
+  const ally = findAlly(actor, queue);
+  const enemies = findAlly(actor, queue);
+  const enemiesThatCanKillAlly = enemiesThatCanKillAlly(ally, units);
+  const enemyWithLowestHP = selectTargetWithLowestHp(enemies);
+  
+
+};
