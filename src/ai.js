@@ -9,31 +9,28 @@ const findAlly = (actor, units) => units
 const findAllies = (actor, units) => units
   .filter((u) => u.partyId === actor.partyId && u.id !== actor.id);
 
-const selectTargetWithLowestHp = (enemies) => {
-  const targets = enemies.sort((unit1, unit2) => unit1.hp - unit2.hp);
-
-  return targets[0];
-};
+const selectTargetWithLowestHp = (enemies) => enemies
+  .sort((unit1, unit2) => unit1.hp - unit2.hp)[0];
 
 const killableEnemies = (actor, enemies) => enemies
   .filter((e) => e.hp < actor.attack);
 
+const unitWithId = (unitId) => (u) => u.id === unitId;
+
 const enemiesActBeforeTarget = (ally, units) => {
   const queue = turnQueue(units);
-  const allyTurn = queue.find((u) => u.id === ally.id);
-  const allyTurnNumber = queue.findIndex((u) => u.id === ally.id);
+  const allyTurnNumber = queue.findIndex(unitWithId(ally.id));
   const slicedQueue = queue.slice(0, allyTurnNumber);
-  const enemiesActingBeforeTarget = slicedQueue.filter((e) => e.partyId !== ally.partyId)
-    .filter((actingEnemy) => actingEnemy.movePoints > allyTurn.movePoints);
+  const enemiesActingBeforeTarget = slicedQueue.filter((e) => e.partyId !== ally.partyId);
   return enemiesActingBeforeTarget;
 };
 
-const enemiesThatCanKillAlly = (ally, units) => enemiesActBeforeTarget(ally, units)
-  .filter((e) => e.attack > ally.hp);
+const findKillers = (target, attackers) => attackers
+  .filter((e) => e.attack > target.hp);
 
 const targetEnemyBeforeAllyDeath = (actor, units) => {
   const ally = findAlly(actor, units);
-  const killers = enemiesThatCanKillAlly(ally, units);
+  const killers = findKillers(ally, enemiesActBeforeTarget(ally, units));
   const sortedKillersArray = killableEnemies(actor, killers)
     .sort((e1, e2) => e1.movePoints - e2.movePoints);
 
@@ -58,7 +55,7 @@ module.exports = {
   targetEnemyBeforeAllyDeath,
   findAlly,
   enemiesActBeforeTarget,
-  enemiesThatCanKillAlly,
+  enemiesThatCanKillAlly: findKillers,
 };
 
 /* const searchTargetPreparation = (units) => {
