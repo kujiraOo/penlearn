@@ -57,17 +57,3 @@ module.exports = {
   enemiesActBeforeTarget,
   enemiesThatCanKillAlly: findKillers,
 };
-
-/* const searchTargetPreparation = (units) => {
-  const queue = turnQueue(units);
-  const actor = queue[0];
-  const ally = findAlly(actor, queue);
-  const enemies = findAlly(actor, queue);
-  const targetIfEnemiesCanKillAlly = enemiesThatCanKillAlly(ally, units);
-  const enemyWithLowestHP = selectTargetWithLowestHp(enemies);
-  const target = targetIfEnemiesCanKillAlly.length > 0
-    ? targetIfEnemiesCanKillAlly
-    : enemyWithLowestHP;
-  return target;
-};
-*/

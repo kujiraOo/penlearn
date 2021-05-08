@@ -71,7 +71,7 @@ describe('ai', () => {
   });
 
   describe('findAlly', () => {
-    test('returns correct ally that suppose to die', () => {
+    test('returns first ally from a list of units', () => {
       const allies = [{
         id: 1,
         name: 'Penguin',
@@ -135,7 +135,7 @@ describe('ai', () => {
   });
 
   describe('targetEnemyBeforeAllyDeath', () => {
-    test('returns enemy that turn before ally,can kill him and killable by actor', () => {
+    test('returns enemy that acts before an ally, can kill the ally and is killable by actor', () => {
       const allies = [{
         id: 1,
         name: 'Penguin',
@@ -181,9 +181,9 @@ describe('ai', () => {
 
       const sawa = allies[1];
 
-      const enemyTurnsBeforeAlly = targetEnemyBeforeAllyDeath(sawa, testUnits);
+      const target = targetEnemyBeforeAllyDeath(sawa, testUnits);
 
-      expect(enemyTurnsBeforeAlly).toMatchObject(
+      expect(target).toMatchObject(
         {
           id: 4,
           name: 'Golem Lord',
