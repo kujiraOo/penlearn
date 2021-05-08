@@ -5,11 +5,12 @@ const { turnQueue } = require('./round-system');
 const findEnemies = (actor, units) => units
   .filter((u) => u.partyId !== actor.partyId);
 
-const findAlly = (actor, units) => units
-  .find((unit) => unit.partyId === actor.partyId && unit.id !== actor.id);
+const isAlly = (unit) => (otherUnit) => unit.partyId === otherUnit.partyId
+  && unit.id !== otherUnit.id;
 
-const findAllies = (actor, units) => units
-  .filter((u) => u.partyId === actor.partyId && u.id !== actor.id);
+const findAlly = (unit, units) => units.find(isAlly(unit));
+
+const findAllies = (unit, units) => units.filter(isAlly(unit));
 
 const selectTargetWithLowestHp = (enemies) => enemies
   .sort((unit1, unit2) => unit1.hp - unit2.hp)[0];

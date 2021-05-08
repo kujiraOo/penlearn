@@ -2,7 +2,6 @@ const { units } = require('./test-fixtures');
 const {
   selectAttackTarget,
   killableEnemies,
-  findEnemies,
   findAlly,
   targetEnemyBeforeAllyDeath,
 } = require('./ai');
