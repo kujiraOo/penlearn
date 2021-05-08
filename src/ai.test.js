@@ -51,11 +51,10 @@ describe('ai', () => {
         movePoints: 14,
         partyId: 'Foes',
       }];
-      const testUnits = [...allies, ...foes];
 
       const sawa = allies[0];
 
-      const killableUnits = killableEnemies(sawa, findEnemies(sawa, testUnits));
+      const killableUnits = killableEnemies(sawa, foes);
 
       expect(killableUnits).toMatchObject([{
         id: 3,
