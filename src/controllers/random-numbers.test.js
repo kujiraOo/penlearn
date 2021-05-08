@@ -1,33 +1,24 @@
-const randomNumber = require('../db/random-number');
+const randomNumbers = require('../db/random-numbers');
 const { resetDb } = require('../test/db');
 const setUpSupertest = require('../test/set-up-supertest');
 
 describe('/random-numbers', () => {
   const { request, tearDown, dbPool } = setUpSupertest();
 
-  beforeAll(async (done) => {
+  beforeAll(async () => resetDb(dbPool));
+
+  afterAll(async () => {
     await resetDb(dbPool);
 
-    done();
-  });
-
-  afterAll(async (done) => {
-    await resetDb(dbPool);
     tearDown();
-
-    done();
   });
 
   describe('GET /random-numbers', () => {
-    afterAll(async (done) => {
-      await resetDb(dbPool);
+    afterAll(() => resetDb(dbPool));
 
-      done();
-    });
-
-    test('returns all entries from random_numbers table', async (done) => {
+    test('returns all entries from random_numbers table', async () => {
       const { rows: [randomNumber1] } = await dbPool.query(
-        randomNumber.insert({
+        randomNumbers.insert({
           min: 10,
           max: 20,
           value: 12,
@@ -35,7 +26,7 @@ describe('/random-numbers', () => {
       );
 
       const { rows: [randomNumber2] } = await dbPool.query(
-        randomNumber.insert({
+        randomNumbers.insert({
           min: 10,
           max: 40,
           value: 20,
@@ -56,8 +47,39 @@ describe('/random-numbers', () => {
           value: randomNumber2.value,
         },
       ]);
+    });
+  });
 
-      done();
+  describe('POST /random-numbers', () => {
+    afterAll(() => resetDb(dbPool));
+
+    test('creates a new random number entry', async () => {
+      const { body: { randomNumber } } = await request
+        .post('/api/random-numbers')
+        .send({ min: 10, max: 20 })
+        .expect(200);
+
+      expect(Number.isInteger(randomNumber.id)).toBe(true);
+      expect(randomNumber.value).toBeGreaterThanOrEqual(10);
+      expect(randomNumber.value).toBeLessThanOrEqual(20);
+    });
+
+    test('requires min value in request body', async () => {
+      const response = await request
+        .post('/api/random-numbers')
+        .send({ max: 20 })
+        .expect(400);
+
+      expect(response.text).toBe('min must be a number');
+    });
+
+    test('requires max value in request body', async () => {
+      const response = await request
+        .post('/api/random-numbers')
+        .send({ min: 10 })
+        .expect(400);
+
+      expect(response.text).toBe('max must be a number');
     });
   });
 });
