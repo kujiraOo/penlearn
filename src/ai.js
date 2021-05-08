@@ -1,3 +1,5 @@
+const { sortUnitsByMovePoints } = require('./helpers');
+
 const { turnQueue } = require('./round-system');
 
 const findEnemies = (actor, units) => units
@@ -28,11 +30,10 @@ const enemiesActBeforeTarget = (ally, units) => {
 const findKillers = (target, attackers) => attackers
   .filter((e) => e.attack > target.hp);
 
-const targetEnemyBeforeAllyDeath = (actor, units) => {
+const selectPreemptibleKiller = (actor, units) => {
   const ally = findAlly(actor, units);
   const killers = findKillers(ally, enemiesActBeforeTarget(ally, units));
-  const sortedKillersArray = killableEnemies(actor, killers)
-    .sort((e1, e2) => e1.movePoints - e2.movePoints);
+  const sortedKillersArray = sortUnitsByMovePoints(killableEnemies(actor, killers));
 
   return sortedKillersArray[0];
 };
@@ -41,7 +42,7 @@ const selectAttackTarget = (actor, units) => {
   const enemies = findEnemies(actor, units);
   const allies = findAllies(actor, units);
   if (killableEnemies(actor, enemies).length > 0 && allies.length > 0) {
-    const target = targetEnemyBeforeAllyDeath(actor, units);
+    const target = selectPreemptibleKiller(actor, units);
     if (target) return target;
   }
 
@@ -52,7 +53,7 @@ module.exports = {
   selectAttackTarget,
   killableEnemies,
   findEnemies,
-  targetEnemyBeforeAllyDeath,
+  targetEnemyBeforeAllyDeath: selectPreemptibleKiller,
   findAlly,
   enemiesActBeforeTarget,
   enemiesThatCanKillAlly: findKillers,
