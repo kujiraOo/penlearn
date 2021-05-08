@@ -15,28 +15,19 @@ describe('selectAttackTarget', () => {
   });
 });
 
-describe('selectAttackTarget', () => {
+describe('ai for choosing target', () => {
   test('returns killable units from opposite party', () => {
-    const allies = [{
-      id: 1,
-      name: 'Penguin',
-      hp: 1,
-      def: 0,
-      attack: 21,
-      agl: 12,
-      movePoints: 12,
-      partyId: 'Allies',
-    },
-    {
-      id: 2,
-      name: 'Sawa',
-      hp: 100,
-      def: 6,
-      attack: 9999,
-      agl: 21,
-      movePoints: 21,
-      partyId: 'Allies',
-    },
+    const allies = [
+      {
+        id: 2,
+        name: 'Sawa',
+        hp: 100,
+        def: 6,
+        attack: 9999,
+        agl: 21,
+        movePoints: 21,
+        partyId: 'Allies',
+      },
     ];
     const foes = [{
       id: 3,
@@ -51,7 +42,7 @@ describe('selectAttackTarget', () => {
     {
       id: 4,
       name: 'Golem Lord',
-      hp: 50,
+      hp: 10000,
       def: 3,
       attack: 18,
       agl: 14,
@@ -60,7 +51,7 @@ describe('selectAttackTarget', () => {
     }];
     const testUnits = [...allies, ...foes];
 
-    const sawa = allies[1];
+    const sawa = allies[0];
 
     const killableUnits = killableEnemies(sawa, findEnemies(sawa, testUnits));
 
@@ -74,16 +65,7 @@ describe('selectAttackTarget', () => {
       movePoints: 8,
       partyId: 'Foes',
     },
-    {
-      id: 4,
-      name: 'Golem Lord',
-      hp: 50,
-      def: 3,
-      attack: 18,
-      agl: 14,
-      movePoints: 14,
-      partyId: 'Foes',
-    }]);
+    ]);
   });
 
   test('returns correct ally that suppose to die', () => {
