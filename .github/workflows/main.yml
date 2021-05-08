@@ -23,9 +23,4 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 15.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
+    - run: docker-compose -f docker-compose.test.yml run test-ci
