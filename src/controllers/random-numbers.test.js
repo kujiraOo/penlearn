@@ -5,7 +5,7 @@ const setUpSupertest = require('../test/set-up-supertest');
 describe('/random-numbers', () => {
   const { request, tearDown, dbPool } = setUpSupertest();
 
-  beforeAll(async () => resetDb(dbPool));
+  beforeAll(() => resetDb(dbPool));
 
   afterAll(async () => {
     await resetDb(dbPool);
