@@ -2,7 +2,6 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const Router = require('@koa/router');
 
-// const dbPool = require('./db/db-pool');
 const dbPoolMiddleware = require('./middleware/db-pool-middleware');
 const randomNumbers = require('./controllers/random-numbers');
 
