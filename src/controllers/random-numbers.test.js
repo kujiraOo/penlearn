@@ -73,10 +73,28 @@ describe('/random-numbers', () => {
       expect(response.text).toBe('min must be a number');
     });
 
+    test('requires min value to be a number', async () => {
+      const response = await request
+        .post('/api/random-numbers')
+        .send({ min: 'bob', max: 20 })
+        .expect(400);
+
+      expect(response.text).toBe('min must be a number');
+    });
+
     test('requires max value in request body', async () => {
       const response = await request
         .post('/api/random-numbers')
         .send({ min: 10 })
+        .expect(400);
+
+      expect(response.text).toBe('max must be a number');
+    });
+
+    test('requires max value to be a number', async () => {
+      const response = await request
+        .post('/api/random-numbers')
+        .send({ min: 10, max: 'bob' })
         .expect(400);
 
       expect(response.text).toBe('max must be a number');
