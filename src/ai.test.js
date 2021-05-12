@@ -1,24 +1,20 @@
-const { units } = require('./test-fixtures');
+const testFixtures = require('./test-fixtures');
 const {
   selectAttackTarget,
-  killableEnemies,
-  findAlly,
-  targetEnemyBeforeAllyDeath,
 } = require('./ai');
 
 describe('ai', () => {
   describe('selectAttackTarget', () => {
     test('returns unit with lowest hp from opposite party', () => {
+      const { units } = testFixtures;
       const sawa = units[1];
       const sadomasochistGolem = selectAttackTarget(sawa, units);
 
       expect(sadomasochistGolem.id).toBe(3);
     });
-  });
 
-  describe('killableEnemies', () => {
-    test('returns killable units from opposite party', () => {
-      const allies = [
+    test('returns enemy that acts before an ally, can kill the ally and is killable by actor', () => {
+      const units = [
         {
           id: 2,
           name: 'Sawa',
@@ -26,99 +22,19 @@ describe('ai', () => {
           def: 6,
           attack: 9999,
           agl: 21,
-          movePoints: 21,
+          movePoints: 16,
           partyId: 'Allies',
         },
-      ];
-      const foes = [{
-        id: 3,
-        name: 'Sadomasochist Golem',
-        hp: 35,
-        def: -3,
-        attack: 12,
-        agl: 8,
-        movePoints: 8,
-        partyId: 'Foes',
-      },
-      {
-        id: 4,
-        name: 'Golem Lord',
-        hp: 10000,
-        def: 3,
-        attack: 18,
-        agl: 14,
-        movePoints: 14,
-        partyId: 'Foes',
-      }];
-
-      const sawa = allies[0];
-
-      const killableUnits = killableEnemies(sawa, foes);
-
-      expect(killableUnits).toMatchObject([{
-        id: 3,
-        name: 'Sadomasochist Golem',
-        hp: 35,
-        def: -3,
-        attack: 12,
-        agl: 8,
-        movePoints: 8,
-        partyId: 'Foes',
-      },
-      ]);
-    });
-  });
-
-  describe('findAlly', () => {
-    test('returns first ally from a list of units', () => {
-      const allies = [{
-        id: 1,
-        name: 'Penguin',
-        hp: 1,
-        def: 0,
-        attack: 21,
-        agl: 12,
-        movePoints: 12,
-        partyId: 'Allies',
-      },
-      {
-        id: 2,
-        name: 'Sawa',
-        hp: 100,
-        def: 6,
-        attack: 9999,
-        agl: 21,
-        movePoints: 21,
-        partyId: 'Allies',
-      },
-      ];
-      const foes = [{
-        id: 3,
-        name: 'Sadomasochist Golem',
-        hp: 35,
-        def: -3,
-        attack: 12,
-        agl: 8,
-        movePoints: 8,
-        partyId: 'Foes',
-      },
-      {
-        id: 4,
-        name: 'Golem Lord',
-        hp: 50,
-        def: 3,
-        attack: 18,
-        agl: 14,
-        movePoints: 14,
-        partyId: 'Foes',
-      }];
-      const testUnits = [...allies, ...foes];
-
-      const sawa = allies[1];
-
-      const ally = findAlly(sawa, testUnits);
-
-      expect(ally).toMatchObject(
+        {
+          id: 4,
+          name: 'Golem Lord',
+          hp: 35,
+          def: 3,
+          attack: 18,
+          agl: 14,
+          movePoints: 14,
+          partyId: 'Foes',
+        },
         {
           id: 1,
           name: 'Penguin',
@@ -129,58 +45,82 @@ describe('ai', () => {
           movePoints: 12,
           partyId: 'Allies',
         },
+        {
+          id: 3,
+          name: 'Sadomasochist Golem',
+          hp: 35,
+          def: -3,
+          attack: 12,
+          agl: 8,
+          movePoints: 8,
+          partyId: 'Foes',
+        },
+      ];
+
+      const actor = units[0];
+
+      const target = selectAttackTarget(actor, units);
+
+      expect(target).toMatchObject(
+        {
+          id: 4,
+          name: 'Golem Lord',
+          hp: 35,
+          def: 3,
+          attack: 18,
+          agl: 14,
+          movePoints: 14,
+          partyId: 'Foes',
+        },
       );
     });
-  });
 
-  describe('targetEnemyBeforeAllyDeath', () => {
-    test('returns enemy that acts before an ally, can kill the ally and is killable by actor', () => {
-      const allies = [{
-        id: 1,
-        name: 'Penguin',
-        hp: 1,
-        def: 0,
-        attack: 21,
-        agl: 12,
-        movePoints: 12,
-        partyId: 'Allies',
-      },
-      {
-        id: 2,
-        name: 'Sawa',
-        hp: 100,
-        def: 6,
-        attack: 9999,
-        agl: 21,
-        movePoints: 21,
-        partyId: 'Allies',
-      },
+    test('prioritizes selectPreemptibleKiller over selectTargetWithLowestHp', () => {
+      const units = [
+        {
+          id: 2,
+          name: 'Sawa',
+          hp: 100,
+          def: 6,
+          attack: 9999,
+          agl: 21,
+          movePoints: 16,
+          partyId: 'Allies',
+        },
+        {
+          id: 4,
+          name: 'Golem Lord',
+          hp: 50,
+          def: 3,
+          attack: 18,
+          agl: 14,
+          movePoints: 14,
+          partyId: 'Foes',
+        },
+        {
+          id: 1,
+          name: 'Penguin',
+          hp: 1,
+          def: 0,
+          attack: 21,
+          agl: 12,
+          movePoints: 12,
+          partyId: 'Allies',
+        },
+        {
+          id: 3,
+          name: 'Sadomasochist Golem',
+          hp: 35,
+          def: -3,
+          attack: 12,
+          agl: 8,
+          movePoints: 8,
+          partyId: 'Foes',
+        },
       ];
-      const foes = [{
-        id: 3,
-        name: 'Sadomasochist Golem',
-        hp: 35,
-        def: -3,
-        attack: 12,
-        agl: 8,
-        movePoints: 8,
-        partyId: 'Foes',
-      },
-      {
-        id: 4,
-        name: 'Golem Lord',
-        hp: 50,
-        def: 3,
-        attack: 18,
-        agl: 14,
-        movePoints: 14,
-        partyId: 'Foes',
-      }];
-      const testUnits = [...allies, ...foes];
+      const actor = units[0];
 
-      const sawa = allies[1];
-
-      const target = targetEnemyBeforeAllyDeath(sawa, testUnits);
+      const target = selectAttackTarget(actor, units);
 
       expect(target).toMatchObject(
         {
