@@ -10,9 +10,22 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
+  rules: {
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          '**/*.test.js',
+          'src/test/*.js',
+        ],
+      },
+    ],
+  },
   globals: {
     describe: 'readonly',
     test: 'readonly',
     expect: 'readonly',
+    beforeAll: 'readonly',
+    afterAll: 'readonly',
   },
 };

@@ -1,7 +1,7 @@
 const Router = require('@koa/router');
 
 const { random } = require('../random');
-const randomNumbers = require('../db/random-number');
+const randomNumbers = require('../db/random-numbers');
 
 module.exports = new Router({ prefix: '/random-numbers' })
   .get('/', async (ctx) => {
