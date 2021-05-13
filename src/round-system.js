@@ -1,11 +1,10 @@
+const { sortUnitsByMovePoints } = require('./helpers');
+
 const { updateUnits } = require('./helpers');
 
 const moveCost = 6;
 
 const turnQueueLength = 12;
-
-const sortUnitsByMovePoints = (units) => [...units]
-  .sort((unit1, unit2) => unit2.movePoints - unit1.movePoints);
 
 const pickUnitWithMaxMovePoints = (units) => sortUnitsByMovePoints(units)[0];
 
@@ -39,7 +38,6 @@ module.exports = {
   restoreMovePoints,
   updateMovePoints,
   pickUnitWithMaxMovePoints,
-  sortUnitsByMovePoints,
   moveCost,
   turnQueueLength,
 };
