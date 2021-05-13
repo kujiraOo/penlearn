@@ -10,7 +10,7 @@ const isAllyOf = (unit) => (otherUnit) => unit.partyId === otherUnit.partyId
 const selectTargetWithLowestHp = (enemies) => enemies
   .sort((unit1, unit2) => unit1.hp - unit2.hp)[0];
 
-const canKill = (target) => (attacker) => attacker.attack >= target.hp + target.def;
+const canKill = (target) => (attacker) => attacker.attack >= target.hp;
 
 const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
 
