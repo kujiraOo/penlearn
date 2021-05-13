@@ -10,8 +10,6 @@ const isAllyOf = (unit) => (otherUnit) => unit.partyId === otherUnit.partyId
 const selectTargetWithLowestHp = (enemies) => enemies
   .sort((unit1, unit2) => unit1.hp - unit2.hp)[0];
 
-const unitWithId = (unitId) => (u) => u.id === unitId;
-
 const canKill = (target) => (attacker) => attacker.attack >= target.hp;
 
 const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
@@ -19,7 +17,7 @@ const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
 const selectPreemptibleKiller = (actor, units) => {
   const ally = units.find(isAllyOf(actor));
   const queue = turnQueue(units);
-  const allyTurnNumber = queue.findIndex(unitWithId(ally.id));
+  const allyTurnNumber = queue.findIndex(isAllyOf(actor));
 
   return queue
     .slice(0, allyTurnNumber)
@@ -44,5 +42,4 @@ const selectAttackTarget = (actor, units) => {
 
 module.exports = {
   selectAttackTarget,
-  selectPreemptibleKiller,
 };
