@@ -15,8 +15,8 @@ const canKill = (target) => (attacker) => attacker.attack >= target.hp;
 const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
 
 const selectPreemptibleKiller = (actor, units) => {
-  const ally = units.find(isAllyOf(actor));
   const queue = turnQueue(units);
+  const ally = queue.find(isAllyOf(actor));
   const allyTurnNumber = queue.findIndex(isAllyOf(actor));
 
   return queue
