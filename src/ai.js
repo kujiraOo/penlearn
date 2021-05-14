@@ -31,7 +31,7 @@ const selectPreemptibleKiller = (actor, units) => {
     .filter(isEnemyOf(ally))
     .filter(canKill(ally))
     .filter(canBeKilledBy(actor))
-    .sort(byMovePointsDesc)[0];
+    .sort(byHpDesc)[0];
 };
 
 const selectAttackTarget = (actor, units) => {
