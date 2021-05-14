@@ -1,4 +1,4 @@
-const { byMovePointsDesc } = require('./helpers');
+const { byMovePointsDesc, byHpDesc } = require('./helpers');
 
 const { turnQueue } = require('./round-system');
 
@@ -14,7 +14,14 @@ const canKill = (target) => (attacker) => attacker.attack >= target.hp;
 
 const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
 
+const selectKillableEnemy = (actor, units) => units
+  .filter(isEnemyOf(actor))
+  .filter(canBeKilledBy(actor))
+  .sort(byHpDesc)[0];
+
 const selectPreemptibleKiller = (actor, units) => {
+  if (units.filter(isAllyOf(actor)).length === 0) return null;
+
   const queue = turnQueue(units);
   const ally = queue.find(isAllyOf(actor));
   const allyTurnNumber = queue.findIndex(isAllyOf(actor));
@@ -29,14 +36,15 @@ const selectPreemptibleKiller = (actor, units) => {
 
 const selectAttackTarget = (actor, units) => {
   const enemies = units.filter(isEnemyOf(actor));
-  const hasAllies = units.filter(isAllyOf(actor)).length > 0;
-  const hasKillableEnemies = units.filter(canBeKilledBy(actor)).length > 0;
+  const hasKillableEnemies = enemies.filter(canBeKilledBy(actor)).length > 0;
 
-  if (hasKillableEnemies && hasAllies) {
-    const target = selectPreemptibleKiller(actor, units);
+  if (hasKillableEnemies) {
+    let target = selectPreemptibleKiller(actor, units);
+    if (target) return target;
+
+    target = selectKillableEnemy(actor, units);
     if (target) return target;
   }
-
   return selectTargetWithLowestHp(enemies);
 };
 
