@@ -36,7 +36,7 @@ const selectPreemptibleKiller = (actor, units) => {
 
 const selectAttackTarget = (actor, units) => {
   const enemies = units.filter(isEnemyOf(actor));
-  const hasKillableEnemies = units.filter(canBeKilledBy(actor)).length > 0;
+  const hasKillableEnemies = enemies.filter(canBeKilledBy(actor)).length > 0;
 
   if (hasKillableEnemies) {
     let target = selectPreemptibleKiller(actor, units);
