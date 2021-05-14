@@ -60,7 +60,7 @@ describe('updateUnits', () => {
 });
 
 describe('sortUnitsByMovePoints', () => {
-  test('sort in the right way', () => {
+  test('sorts by movePoints descending', () => {
     const sortedArray = sortUnitsByMovePoints(units);
 
     expect(sortedArray).toMatchObject([
@@ -108,7 +108,7 @@ describe('sortUnitsByMovePoints', () => {
 });
 
 describe('sortUnitsByHp', () => {
-  test('sort in the right way', () => {
+  test('sorts by hp descending', () => {
     const sortedArray = sortUnitsByHp(units);
 
     expect(sortedArray).toMatchObject([{
