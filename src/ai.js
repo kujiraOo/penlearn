@@ -1,4 +1,4 @@
-const { byMovePointsDesc, byHpDesc } = require('./helpers');
+const { byHpDesc } = require('./helpers');
 
 const { turnQueue } = require('./round-system');
 
