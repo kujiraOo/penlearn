@@ -1,6 +1,8 @@
+const { sql } = require('./helpers');
+
 module.exports = {
   insert: ({ min, max, value }) => ({
-    text: `
+    text: sql`
       insert into random_numbers (min, max, value)
         values ($1, $2, $3)
         returning id, value
