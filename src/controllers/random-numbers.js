@@ -1,4 +1,5 @@
 const Router = require('@koa/router');
+const Joi = require('joi');
 
 const { random } = require('../random');
 const randomNumbers = require('../db/random-numbers');
@@ -10,15 +11,16 @@ module.exports = new Router({ prefix: '/random-numbers' })
     ctx.body = rows;
   })
   .post('/', async (ctx) => {
+    const { error } = Joi.object({
+      min: Joi.number().required(),
+      max: Joi.number().required(),
+    }).validate(ctx.request.body);
+
+    if (error) {
+      ctx.throw(400, error.message);
+    }
+
     const { min, max } = ctx.request.body;
-
-    if (typeof min !== 'number') {
-      ctx.throw(400, 'min must be a number');
-    }
-
-    if (typeof max !== 'number') {
-      ctx.throw(400, 'max must be a number');
-    }
 
     const query = randomNumbers.insert({
       min,
