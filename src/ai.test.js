@@ -197,7 +197,7 @@ describe('ai', () => {
       );
     });
 
-    test('returns killable enemy that can kill ally and have highest hp', () => {
+    test('returns preemptible killer with highest hp', () => {
       const units = [
         {
           id: 2,
