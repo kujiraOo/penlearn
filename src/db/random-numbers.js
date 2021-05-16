@@ -9,5 +9,5 @@ module.exports = {
     `,
     values: [min, max, value],
   }),
-  selectAll: 'select id, value from random_numbers',
+  selectAll: sql`select id, value from random_numbers`,
 };
