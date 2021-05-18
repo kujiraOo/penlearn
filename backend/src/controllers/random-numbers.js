@@ -10,6 +10,32 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     ctx.body = rows;
   })
+  .put('/:id', async (ctx) => {
+    const { error } = Joi.object({
+      min: Joi.number().required(),
+      max: Joi.number().required(),
+      value: Joi.number().required(),
+    }).validate(ctx.request.body);
+
+    if (error) {
+      ctx.throw(400, error.message);
+    }
+
+    const { min, max, value } = ctx.request.body;
+
+    const { id } = ctx.params;
+
+    const query = randomNumbers.update({
+      id,
+      min,
+      max,
+      value,
+    });
+
+    const { rows } = await ctx.dbPool.query(query);
+
+    ctx.body = rows;
+  })
   .post('/', async (ctx) => {
     const { error } = Joi.object({
       min: Joi.number().required(),
