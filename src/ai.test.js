@@ -267,5 +267,76 @@ describe('ai', () => {
         },
       );
     });
+
+    test('prioritizes selectKillableByPartyEnemy over selectTargetWithLowestHp', () => {
+      const units = [
+        {
+          id: 2,
+          name: 'Sawa',
+          hp: 100,
+          def: 6,
+          attack: 10,
+          agl: 21,
+          movePoints: 21,
+          partyId: 'Allies',
+        },
+        {
+          id: 1,
+          name: 'Penguin',
+          hp: 1,
+          def: 0,
+          attack: 10,
+          agl: 16,
+          movePoints: 16,
+          partyId: 'Allies',
+        },
+        {
+          id: 4,
+          name: 'Golem Lord',
+          hp: 19,
+          def: 3,
+          attack: 18,
+          agl: 14,
+          movePoints: 14,
+          partyId: 'Foes',
+        },
+        {
+          id: 3,
+          name: 'Sadomasochist Golem',
+          hp: 18,
+          def: -3,
+          attack: 12,
+          agl: 13,
+          movePoints: 13,
+          partyId: 'Foes',
+        },
+        {
+          id: 4,
+          name: 'Lord of Golem Lord',
+          hp: 17,
+          def: 3,
+          attack: 18,
+          agl: 15,
+          movePoints: 15,
+          partyId: 'Foes',
+        },
+      ];
+      const actor = units[0];
+
+      const target = selectAttackTarget(actor, units);
+
+      expect(target).toMatchObject(
+        {
+          id: 4,
+          name: 'Lord of Golem Lord',
+          hp: 17,
+          def: 3,
+          attack: 18,
+          agl: 15,
+          movePoints: 15,
+          partyId: 'Foes',
+        },
+      );
+    });
   });
 });

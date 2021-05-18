@@ -1,4 +1,4 @@
-const { byHpDesc } = require('./helpers');
+const { byHpDesc, byMovePointsDesc } = require('./helpers');
 
 const { turnQueue } = require('./round-system');
 
@@ -13,6 +13,23 @@ const selectTargetWithLowestHp = (enemies) => enemies
 const canKill = (target) => (attacker) => attacker.attack >= target.hp;
 
 const canBeKilledBy = (attacker) => (target) => canKill(target)(attacker);
+
+const canKillWithParty = (target) => (accumulatedDmg) => accumulatedDmg >= target.hp;
+
+const canBeKilledByDmg = (accumulatedDmg) => (target) => canKillWithParty(target)(accumulatedDmg);
+
+const accumulatedDmgOfParty = (actor, units) => {
+  const queue = turnQueue(units);
+  const queueBeforeEnemyTurnNumber = queue.findIndex(isEnemyOf(actor)) - 1;
+  const totalPartyTurnDmg = units.slice(0, queueBeforeEnemyTurnNumber)
+    .reduce((acc, unit) => acc + unit.attack, 0);
+  return totalPartyTurnDmg;
+};
+
+const selectKillableByPartyEnemy = (actor, units) => units
+  .filter(isEnemyOf(actor))
+  .filter(canBeKilledByDmg(accumulatedDmgOfParty(actor, units)))
+  .sort(byMovePointsDesc)[0];
 
 const selectKillableEnemy = (actor, units) => units
   .filter(isEnemyOf(actor))
@@ -45,6 +62,11 @@ const selectAttackTarget = (actor, units) => {
     target = selectKillableEnemy(actor, units);
     if (target) return target;
   }
+  if (!hasKillableEnemies) {
+    const target = selectKillableByPartyEnemy(actor, units);
+    if (target) return target;
+  }
+
   return selectTargetWithLowestHp(enemies);
 };
 
