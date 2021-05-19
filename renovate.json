@@ -2,6 +2,6 @@
   "extends": [
     "config:base",
   ],
-  ”rangeStrategy”: “replace”,
+  "rangeStrategy": "replace",
   "masterIssue": true
 }
