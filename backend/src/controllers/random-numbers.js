@@ -48,9 +48,9 @@ module.exports = new Router({ prefix: '/random-numbers' })
       value,
     });
 
-    const { rows } = await ctx.dbPool.query(query);
+    const { rows: [randomNumber] } = await ctx.dbPool.query(query);
 
-    ctx.body = rows;
+    ctx.body = { randomNumber };
   })
   .post('/', async (ctx) => {
     const { error } = Joi.object({

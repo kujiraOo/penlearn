@@ -16,7 +16,9 @@ module.exports = {
     min, max, value, id,
   }) => ({
     text: sql`
-    update random_numbers set min = $1, max = $2, value = $3, updated_at = now() where id = $4
+    update random_numbers 
+      set min = $1, max = $2, value = $3, updated_at = now() 
+    where id = $4
     returning min, max, value, id, created_at, updated_at`,
 
     values: [min, max, value, id],
