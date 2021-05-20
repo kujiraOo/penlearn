@@ -7,17 +7,17 @@ services:
       POSTGRES_USER: battle
       POSTGRES_PASSWORD: battle
   test-watch:
-    build: .
+    build: backend
     command: sh -c "npm run wait-db && npm run migrate up && npm run test-watch-all"
     environment:
       DATABASE_URL: postgres://battle:battle@db:5432/battle
     volumes:
-      - ./src:/app/src/
-      - ./migrations:/app/migrations/
+      - ./backend/src:/app/src/
+      - ./backend/migrations:/app/migrations/
     depends_on:
       - db
   test-ci:
-    build: .
+    build: backend
     command: sh -c "npm run wait-db && npm run migrate up && npm run test"
     environment:
       DATABASE_URL: postgres://battle:battle@db:5432/battle
