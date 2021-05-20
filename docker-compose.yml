@@ -6,12 +6,12 @@ services:
       POSTGRES_DB: battle
       POSTGRES_USER: battle
       POSTGRES_PASSWORD: battle
-  battle:
-    build: .
+  backend:
+    build: backend
     ports:
       - 3000:3000
     environment:
       DATABASE_URL: postgres://battle:battle@db:5432/battle
     volumes:
-      - ./src:/app/src/
-      - ./migrations:/app/migrations/
+      - ./backend/src:/app/src/
+      - ./backend/migrations:/app/migrations/
