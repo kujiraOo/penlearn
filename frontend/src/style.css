@@ -12,3 +12,22 @@ body {
 .align-center {
   text-align: center;
 }
+
+table {
+  margin: auto;
+  width: 75%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+tr {
+  border-bottom: 1px solid #cecedd;
+}
+
+td, th {
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+}
