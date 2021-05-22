@@ -4,51 +4,88 @@ import { getRandomNumbers } from './client.js';
 import flexContainer from './components/flex-container.js';
 import { div } from './components/helpers.js';
 
-const App = (parent) => {
-  let state = { randomNumbers: [{}] };
+const createComponent = (parent, component) => {
+  let state = null;
   let el = null;
+  let currentEffect = 0;
+  let currentState = 0;
 
-  const render = ({ onClick }) => {
-    const { randomNumbers } = state;
+  const effects = [];
+  const states = [];
 
-    const el = div(
-      table(randomNumbers),
-      flexContainer(
-        button('Random number!', onClick)
-      )
-    );
+  const useEffect = (effect) => {
+    const done = effects[currentEffect];
+
+    if (!done) {
+      effect();
+      effects[currentEffect] = true;
+    }
+
+    console.log(currentEffect);
+
+    currentEffect++;
+  };
+
+
+  const useState = (initialState) => {
+    const stateIndex = currentState;
+
+    if (!states[stateIndex]) {
+      states[stateIndex] = initialState;
+    }
+
+    const setState = (newState) => {
+      states[stateIndex] = newState;
+
+      render();
+    };
+
+    currentState++;
+
+    return [states[stateIndex], setState];
+  };
+
+  const render = () => {
+    if (el) el.remove();
+
+    el = component({ state, useEffect, useState });
+
+    currentEffect = 0;
+    currentState = 0;
   
     parent.appendChild(el);
   
     return el;
   };
-  
-  const updateState = (newState) => { 
-    state = newState;
-  
-    if (el) el.remove();
-  
-    el = render({
-      state,
-      onClick: () => updateState({ randomNumbers: [{ wow: 'wow', pbp: 1 }] }),
-    });
-  };
 
-  getRandomNumbers().then((newRandomNumbers) => updateState({ randomNumbers: newRandomNumbers }));
-
-
-  return {
-    render,
-    updateState,
-  }
+  return { render }
 }
 
+const App = ({ useState, useEffect }) => {
+  const [randomNumbers, setRandomNumbers] = useState([]);
 
+  const onClick = () => setRandomNumbers([{ wow: 'wow', pbp: 1 }]);
 
-const init = async () => {
+  useEffect(async () => {
+    const newRandomNumbers = await getRandomNumbers();
+
+    setRandomNumbers(newRandomNumbers);
+  });
+
+  return div(
+    table(randomNumbers),
+    flexContainer(
+      button('Random number!', onClick)
+    )
+  )
+}
+
+const init = () => {
   const rootElement = document.getElementById('root');
 
-  App(rootElement);
+  const app = createComponent(rootElement, App);
+
+  app.render();
 }
 
 init();

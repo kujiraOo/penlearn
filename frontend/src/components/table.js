@@ -13,7 +13,9 @@ const row = (rowData) => tr((el) => {
 });
 
 export default (data) => table((el) => {
-  el.appendChild(header(data[0]));
+  if (data[0]) {
+    el.appendChild(header(data[0]));
+  }
 
   data.forEach((rowData) => {
     el.appendChild(row(rowData));
