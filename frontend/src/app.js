@@ -1,18 +1,54 @@
-import * as randomNumbers from './components/random-numbers.js';
-import { html } from './components/helpers.js';
 import table from './components/table.js';
+import button from './components/button.js';
 import { getRandomNumbers } from './client.js';
+import flexContainer from './components/flex-container.js';
+import { div } from './components/helpers.js';
 
-console.log('Random Wars!');
+const App = (parent) => {
+  let state = { randomNumbers: [{}] };
+  let el = null;
 
-const app = async () => {
-  const rootElement = document.getElementById('root');
+  const render = ({ onClick }) => {
+    const { randomNumbers } = state;
 
-  const randomNumbers = await getRandomNumbers();
+    const el = div(
+      table(randomNumbers),
+      flexContainer(
+        button('Random number!', onClick)
+      )
+    );
+  
+    parent.appendChild(el);
+  
+    return el;
+  };
+  
+  const updateState = (newState) => { 
+    state = newState;
+  
+    if (el) el.remove();
+  
+    el = render({
+      state,
+      onClick: () => updateState({ randomNumbers: [{ wow: 'wow', pbp: 1 }] }),
+    });
+  };
 
-  if (randomNumbers) {
-    rootElement.appendChild(table(randomNumbers));
+  getRandomNumbers().then((newRandomNumbers) => updateState({ randomNumbers: newRandomNumbers }));
+
+
+  return {
+    render,
+    updateState,
   }
 }
 
-app();
+
+
+const init = async () => {
+  const rootElement = document.getElementById('root');
+
+  App(rootElement);
+}
+
+init();

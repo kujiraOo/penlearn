@@ -1,32 +1,4 @@
-
-const element = (tag) => (content) => {
-  const htmlElement = document.createElement(tag);
-
-  switch (typeof content) {
-    case 'string':
-    case 'number': {
-      htmlElement.innerText = content;
-      break;
-    }
-    case 'function': {
-      content(htmlElement);
-      break;
-    }
-    default: {
-      throw new Error(`content valid types: string, number, function, but got ${content}`);
-    }
-  }
-
-  return htmlElement;
-};
-
-const th = element('th');
-
-const td = element('td');
-
-const tr = element('tr');
-
-const table = element('table');
+import { table, tr, th, td } from './helpers.js';
 
 const header = (rowData) => tr((el) => {
   Object.keys(rowData).forEach((key) => {
