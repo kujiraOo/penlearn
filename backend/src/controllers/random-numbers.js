@@ -7,9 +7,7 @@ const randomNumbers = require('../db/random-numbers');
 const validate = (schema, value, ctx) => {
   const { error } = schema.validate(value);
 
-  if (error) {
-    ctx.throw(400, error.message);
-  }
+  if (error) ctx.throw(400, error.message);
 };
 
 module.exports = new Router({ prefix: '/random-numbers' })
@@ -19,6 +17,12 @@ module.exports = new Router({ prefix: '/random-numbers' })
     ctx.body = rows;
   })
   .put('/:id', async (ctx) => {
+    const { error } = Joi.object({
+      id: Joi.number().required(),
+    }).validate(ctx.params);
+
+    if (error) ctx.throw(400, error.message);
+
     validate(
       Joi.object({
         min: Joi.number().required(),
@@ -50,6 +54,8 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     const { rows: [randomNumber] } = await ctx.dbPool.query(query);
 
+    if (!randomNumber) ctx.throw(404, 'Not found');
+
     ctx.body = { randomNumber };
   })
   .post('/', async (ctx) => {
@@ -58,9 +64,7 @@ module.exports = new Router({ prefix: '/random-numbers' })
       max: Joi.number().required(),
     }).validate(ctx.request.body);
 
-    if (error) {
-      ctx.throw(400, error.message);
-    }
+    if (error) ctx.throw(400, error.message);
 
     const { min, max } = ctx.request.body;
 
