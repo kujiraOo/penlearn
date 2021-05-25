@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getRandomNumbers } from '../utils/client';
-import Table from '../components/table/table'
+import Table from '../components/table/Table'
 
 const Main = () => {
   const [randomNumbers, setRandomNumbers] = useState([]);
