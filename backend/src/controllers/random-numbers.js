@@ -17,12 +17,6 @@ module.exports = new Router({ prefix: '/random-numbers' })
     ctx.body = rows;
   })
   .put('/:id', async (ctx) => {
-    const { error } = Joi.object({
-      id: Joi.number().required(),
-    }).validate(ctx.params);
-
-    if (error) ctx.throw(400, error.message);
-
     validate(
       Joi.object({
         min: Joi.number().required(),

@@ -104,25 +104,25 @@ describe('/random-numbers', () => {
   describe('PUT /random-numbers/:id', () => {
     afterAll(() => resetDb(dbPool));
 
-    test('change row', async () => {
-      const { rows: [randomNumber1] } = await dbPool.query(
+    test('updates an existing random-number entry', async () => {
+      const { rows: [randomNumberBefore] } = await dbPool.query(
         randomNumbers.insert({
           min: 10,
           max: 20,
           value: 12,
         }),
       );
-      const { body: { randomNumber } } = await request
-        .put('/api/random-numbers/1')
+      const { body: { randomNumber: randomNumberAfter } } = await request
+        .put(`/api/random-numbers/${randomNumberBefore.id}`)
         .send({ min: 66, max: 33, value: 15 })
         .expect(200);
 
-      expect(Number.isInteger(randomNumber.id)).toBe(true);
-      expect(randomNumber.min).toBe(66);
-      expect(randomNumber.max).toBe(33);
-      expect(randomNumber.value).toBe(15);
-      expect(typeof randomNumber.created_at).toBe('string');
-      expect(randomNumber.updated_at).not.toBe(randomNumber1.updated_at);
+      expect(Number.isInteger(randomNumberAfter.id)).toBe(true);
+      expect(randomNumberAfter.min).toBe(66);
+      expect(randomNumberAfter.max).toBe(33);
+      expect(randomNumberAfter.value).toBe(15);
+      expect(typeof randomNumberAfter.created_at).toBe('string');
+      expect(randomNumberAfter.updated_at).not.toBe(randomNumberBefore.updated_at);
     });
 
     test('requires min value in request body', async () => {
