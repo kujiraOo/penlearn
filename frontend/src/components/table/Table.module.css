@@ -1,35 +1,19 @@
-body {
-  background-color: #fffdfa;
-  font-family: Arial, Helvetica, sans-serif;
-  color:#19191b;
-  font-size: 16px;
-}
-
-.container {
-  width: 800px;
-  margin: auto;
-}
-
-.align-center {
-  text-align: center;
-}
-
-table {
+.table {
   margin: 64px auto 64px;
   width: 75%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-tr {
+.table tr {
   border-bottom: 1px solid #cecedd;
 }
 
-td, th {
+.table td, th {
   padding: 8px;
 }
 
-th {
+.table th {
   text-align: left;
 }
 

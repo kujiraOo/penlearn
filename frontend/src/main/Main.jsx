@@ -16,12 +16,9 @@ const Main = () => {
     fetchRandomNumbers();
   }, []);
 
-
   return (
-    <div>
-      <Table data={randomNumbers} />
-    </div>
+    <Table data={randomNumbers} />
   )
-}
+};
 
 export default Main;
