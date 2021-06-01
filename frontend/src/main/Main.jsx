@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getRandomNumbers, addRandomNumber } from '../utils/client';
 import Table from '../components/table/Table';
 import Button from '../components/button/Button';
+import FlexContainer from '../components/flex-container/FlexContainer';
 
 const Main = () => {
   const [randomNumbers, setRandomNumbers] = useState([]);
@@ -26,9 +27,11 @@ const Main = () => {
   return (
     <>
       <Table data={randomNumbers} />
-      <Button onClick={onButtonClick}>
-        Random number!
-      </Button>
+      <FlexContainer>
+        <Button onClick={onButtonClick}>
+          Random number!
+        </Button>
+      </FlexContainer>
     </>
   );
 };
