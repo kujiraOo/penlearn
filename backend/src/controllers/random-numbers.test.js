@@ -197,4 +197,47 @@ describe('/random-numbers', () => {
       expect(response.text).toBe('Not found');
     });
   });
+
+  describe('GET /random-numbers/:id', () => {
+    afterAll(() => resetDb(dbPool));
+
+    test('select correct row', async () => {
+      const schema = {
+        min: 1000,
+        max: 2000,
+        value: 1111,
+      };
+      const { rows: [randomNumber1] } = await dbPool.query(
+        randomNumbers.insert(schema),
+      );
+      const { body } = await request
+        .get(`/api/random-numbers/${randomNumber1.id}`)
+        .expect(200);
+
+      expect(body).toMatchObject(
+        {
+          id: randomNumber1.id,
+          min: 1000,
+          max: 2000,
+          value: randomNumber1.value,
+        },
+      );
+    });
+
+    test('requires id to be a number', async () => {
+      const response = await request
+        .get('/api/random-numbers/putin')
+        .expect(400);
+
+      expect(response.text).toBe('"id" must be a number');
+    });
+
+    test('wrong id', async () => {
+      const response = await request
+        .get('/api/random-numbers/9999')
+        .expect(404);
+
+      expect(response.text).toBe('Not found');
+    });
+  });
 });
