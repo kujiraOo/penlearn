@@ -17,21 +17,6 @@
   text-align: left;
 }
 
-button {
-  background-color: #0095da;
-  border: none;
-  border-radius: 4px;
-  padding: 16px;
-  font-weight: bold;
-  color: #fffdfa;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #007ab3;
-}
-
 .flex-container {
   display: flex;
   justify-content: center;

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { getRandomNumbers } from '../utils/client';
-import Table from '../components/table/Table'
+import Table from '../components/table/Table';
+import Button from '../components/button/Button';
 
 const Main = () => {
   const [randomNumbers, setRandomNumbers] = useState([]);
@@ -17,7 +18,12 @@ const Main = () => {
   }, []);
 
   return (
-    <Table data={randomNumbers} />
+    <>
+      <Table data={randomNumbers} />
+      <Button>
+        Random number!
+      </Button>
+    </>
   )
 };
 
