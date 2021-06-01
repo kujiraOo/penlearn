@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getRandomNumbers } from '../utils/client';
+import { getRandomNumbers, addRandomNumber } from '../utils/client';
 import Table from '../components/table/Table';
 import Button from '../components/button/Button';
 
@@ -17,14 +17,20 @@ const Main = () => {
     fetchRandomNumbers();
   }, []);
 
+  const onButtonClick = async () => {
+    const response = await addRandomNumber();
+
+    console.log(response);
+  };
+
   return (
     <>
       <Table data={randomNumbers} />
-      <Button>
+      <Button onClick={onButtonClick}>
         Random number!
       </Button>
     </>
-  )
+  );
 };
 
 export default Main;
