@@ -10,6 +10,7 @@ const request = async ({ url, body, method }) => {
   if (!response.ok) {
     const { status, statusText } = response;
 
+    // eslint-disable-next-line no-console
     console.error(`request failed ${status} ${statusText}`);
 
     return null;
@@ -18,7 +19,7 @@ const request = async ({ url, body, method }) => {
   return response.json();
 };
 
-const get = (path) => request({ 
+const get = (path) => request({
   method: 'GET',
   url: `/api/${path}`,
 });
