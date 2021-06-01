@@ -100,4 +100,101 @@ describe('/random-numbers', () => {
       expect(response.text).toBe('"max" must be a number');
     });
   });
+
+  describe('PUT /random-numbers/:id', () => {
+    afterAll(() => resetDb(dbPool));
+
+    test('updates an existing random-number entry', async () => {
+      const { rows: [randomNumberBefore] } = await dbPool.query(
+        randomNumbers.insert({
+          min: 10,
+          max: 20,
+          value: 12,
+        }),
+      );
+      const { body: { randomNumber: randomNumberAfter } } = await request
+        .put(`/api/random-numbers/${randomNumberBefore.id}`)
+        .send({ min: 66, max: 33, value: 15 })
+        .expect(200);
+
+      expect(Number.isInteger(randomNumberAfter.id)).toBe(true);
+      expect(randomNumberAfter.min).toBe(66);
+      expect(randomNumberAfter.max).toBe(33);
+      expect(randomNumberAfter.value).toBe(15);
+      expect(typeof randomNumberAfter.created_at).toBe('string');
+      expect(randomNumberAfter.updated_at).not.toBe(randomNumberBefore.updated_at);
+    });
+
+    test('requires min value in request body', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ max: 33, value: 15 })
+        .expect(400);
+
+      expect(response.text).toBe('"min" is required');
+    });
+
+    test('requires min value to be a number', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ min: 'putin', max: 33, value: 15 })
+        .expect(400);
+
+      expect(response.text).toBe('"min" must be a number');
+    });
+
+    test('requires max value in request body', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ min: 66, value: 15 })
+        .expect(400);
+
+      expect(response.text).toBe('"max" is required');
+    });
+
+    test('requires max value to be a number', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ min: 66, max: 'putin', value: 15 })
+        .expect(400);
+
+      expect(response.text).toBe('"max" must be a number');
+    });
+
+    test('requires value in request body', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ min: 66, max: 33 })
+        .expect(400);
+
+      expect(response.text).toBe('"value" is required');
+    });
+
+    test('requires value to be a number', async () => {
+      const response = await request
+        .put('/api/random-numbers/1')
+        .send({ min: 66, max: 33, value: 'putin' })
+        .expect(400);
+
+      expect(response.text).toBe('"value" must be a number');
+    });
+
+    test('requires id to be a number', async () => {
+      const response = await request
+        .put('/api/random-numbers/putin')
+        .send({ min: 66, max: 33, value: 15 })
+        .expect(400);
+
+      expect(response.text).toBe('"id" must be a number');
+    });
+
+    test('wrong id', async () => {
+      const response = await request
+        .put('/api/random-numbers/9999')
+        .send({ min: 66, max: 33, value: 15 })
+        .expect(404);
+
+      expect(response.text).toBe('Not found');
+    });
+  });
 });
