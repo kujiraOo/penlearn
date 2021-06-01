@@ -18,9 +18,9 @@ const Main = () => {
   }, []);
 
   const onButtonClick = async () => {
-    const response = await addRandomNumber();
+    const randomNumber = await addRandomNumber();
 
-    console.log(response);
+    setRandomNumbers([...randomNumbers, randomNumber]);
   };
 
   return (
