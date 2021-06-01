@@ -5,21 +5,32 @@ import styles from './Table.module.css'
 const Table = ({ data }) => {
   const columnHeaders = data[0] ? Object.keys(data[0]) : [];
 
+  const headerCells = columnHeaders.map((header, i) => (
+    <th key={`header-${i}`}>
+      {header}
+    </th>
+  ));
+
+
+  const rows = data.map((dataRow, i) => (
+    <tr key={`row-${i}`}>
+      {Object.values(dataRow).map((value, j) => (
+        <td key={`cell-${j}`}>
+          {value}
+        </td>
+      ))}
+    </tr>
+  ));
+
   return (
     <table className={styles.table}>
       <thead>
-        {columnHeaders.map((header) => <th>{header}</th>)}
+        <tr>
+          {headerCells}
+        </tr>
       </thead>
       <tbody>
-        {data.map((dataRow) => (
-          <tr>
-            {Object.values(dataRow).map(value => (
-              <td>
-                {value}
-              </td>
-            ))}
-          </tr>
-        ))}
+        {rows}
       </tbody>
     </table>
   )
