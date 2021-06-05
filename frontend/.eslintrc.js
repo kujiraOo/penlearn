@@ -26,5 +26,6 @@ module.exports = {
     beforeAll: 'readonly',
     beforeEach: 'readonly',
     afterAll: 'readonly',
+    jest: 'readonly',
   },
 };
