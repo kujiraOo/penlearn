@@ -4,5 +4,5 @@
 
 .container {
   width: 800px;
-  margin: auto;
+  margin: 0 auto 64px;
 }
