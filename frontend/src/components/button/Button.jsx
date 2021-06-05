@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+import { node, func } from 'prop-types';
 
 import styles from './Button.module.css';
 
 const Button = ({ children, onClick }) => (
-  <button 
+  <button
+    type="button"
     className={styles.button}
     onClick={onClick}
   >
@@ -11,9 +13,14 @@ const Button = ({ children, onClick }) => (
   </button>
 );
 
-Button.protoTypes = {
-  children: PropTypes.node,
-  onClick: PropTypes.func,
+Button.propTypes = {
+  children: node,
+  onClick: func,
+};
+
+Button.defaultProps = {
+  children: null,
+  onClick: null,
 };
 
 export default Button;

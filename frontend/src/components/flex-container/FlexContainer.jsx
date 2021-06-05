@@ -1,3 +1,6 @@
+import React from 'react';
+import { node } from 'prop-types';
+
 import styles from './FlexContainer.module.css';
 
 const FlexContainer = ({ children }) => (
@@ -5,5 +8,13 @@ const FlexContainer = ({ children }) => (
     {children}
   </div>
 );
+
+FlexContainer.propTypes = {
+  children: node,
+};
+
+FlexContainer.defaultProps = {
+  children: null,
+};
 
 export default FlexContainer;

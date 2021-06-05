@@ -1,21 +1,23 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+import {
+  arrayOf, objectOf, string, number, oneOfType,
+} from 'prop-types';
 
-import styles from './Table.module.css'
+import styles from './Table.module.css';
 
-const Table = ({ data }) => {
+const Table = ({ data, idProp }) => {
   const columnHeaders = data[0] ? Object.keys(data[0]) : [];
 
-  const headerCells = columnHeaders.map((header, i) => (
-    <th key={`header-${i}`}>
+  const headerCells = columnHeaders.map((header) => (
+    <th key={`header-${header}`}>
       {header}
     </th>
   ));
 
-
-  const rows = data.map((dataRow, i) => (
-    <tr key={`row-${i}`}>
-      {Object.values(dataRow).map((value, j) => (
-        <td key={`cell-${j}`}>
+  const rows = data.map((dataRow) => (
+    <tr key={`row-${dataRow[idProp]}`}>
+      {Object.entries(dataRow).map(([key, value]) => (
+        <td key={`cell-${key}`}>
           {value}
         </td>
       ))}
@@ -33,11 +35,16 @@ const Table = ({ data }) => {
         {rows}
       </tbody>
     </table>
-  )
-}
+  );
+};
 
 Table.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: arrayOf(
+    objectOf(
+      oneOfType([string, number]),
+    ),
+  ).isRequired,
+  idProp: string.isRequired,
 };
 
 export default Table;
