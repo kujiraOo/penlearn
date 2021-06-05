@@ -26,7 +26,10 @@ const Main = () => {
 
   return (
     <>
-      <Table data={randomNumbers} />
+      <Table
+        idProp="id"
+        data={randomNumbers}
+      />
       <FlexContainer>
         <Button onClick={onButtonClick}>
           Random number!
