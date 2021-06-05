@@ -19,4 +19,11 @@ module.exports = {
   ],
   rules: {
   },
+  globals: {
+    describe: 'readonly',
+    test: 'readonly',
+    expect: 'readonly',
+    beforeAll: 'readonly',
+    afterAll: 'readonly',
+  },
 };
