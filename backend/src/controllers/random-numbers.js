@@ -16,6 +16,27 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     ctx.body = rows;
   })
+  .get('/:id', async (ctx) => {
+    validate(
+      Joi.object({
+        id: Joi.number().required(),
+      }),
+      ctx.params,
+      ctx,
+    );
+
+    const { id } = ctx.params;
+
+    const query = randomNumbers.select(
+      id,
+    );
+
+    const { rows: [randomNumber] } = await ctx.dbPool.query(query);
+
+    if (!randomNumber) ctx.throw(404, 'Not found');
+
+    ctx.body = randomNumber;
+  })
   .put('/:id', async (ctx) => {
     validate(
       Joi.object({

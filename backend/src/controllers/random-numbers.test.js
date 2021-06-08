@@ -197,4 +197,47 @@ describe('/random-numbers', () => {
       expect(response.text).toBe('Not found');
     });
   });
+
+  describe('GET /random-numbers/:id', () => {
+    afterAll(() => resetDb(dbPool));
+
+    test('returns an existing entry', async () => {
+      const data = {
+        min: 1000,
+        max: 2000,
+        value: 1111,
+      };
+      const { rows: [randomNumber] } = await dbPool.query(
+        randomNumbers.insert(data),
+      );
+      const { body } = await request
+        .get(`/api/random-numbers/${randomNumber.id}`)
+        .expect(200);
+
+      expect(body).toMatchObject(
+        {
+          id: randomNumber.id,
+          min: 1000,
+          max: 2000,
+          value: randomNumber.value,
+        },
+      );
+    });
+
+    test('requires id to be a number', async () => {
+      const response = await request
+        .get('/api/random-numbers/putin')
+        .expect(400);
+
+      expect(response.text).toBe('"id" must be a number');
+    });
+
+    test('returns 404 if entry with specified id not found', async () => {
+      const response = await request
+        .get('/api/random-numbers/9999')
+        .expect(404);
+
+      expect(response.text).toBe('Not found');
+    });
+  });
 });
