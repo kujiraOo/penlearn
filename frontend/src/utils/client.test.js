@@ -1,6 +1,13 @@
-import { getRandomNumbers } from './client';
+import { addRandomNumber, getRandomNumbers } from './client';
 
 describe('client', () => {
+  const setUpMockFetch = (resolvedValue) => global.fetch.mockResolvedValue(resolvedValue);
+
+  const getSuccessResolvedValue = (response) => ({
+    ok: true,
+    json: async () => response,
+  });
+
   beforeAll(() => {
     global.fetch = jest.fn();
   });
@@ -12,12 +19,7 @@ describe('client', () => {
       { id: 3, value: 80 },
     ];
 
-    const successResolvedValue = {
-      ok: true,
-      json: async () => successResponse,
-    };
-
-    const setUpMockFetch = (resolvedValue) => global.fetch.mockResolvedValue(resolvedValue);
+    const successResolvedValue = getSuccessResolvedValue(successResponse);
 
     it('calls fetch with correct parameters', async () => {
       setUpMockFetch(successResolvedValue);
@@ -48,6 +50,48 @@ describe('client', () => {
       const result = await getRandomNumbers();
 
       expect(result).toBe(null);
+    });
+  });
+
+  describe('addRandomNumber', () => {
+    const successResponse = {
+      randomNumber: { id: 1, value: 50 },
+    };
+    const successResolvedValue = getSuccessResolvedValue(successResponse);
+
+    it('calls fetch with correct parameters', async () => {
+      setUpMockFetch(successResolvedValue);
+
+      await addRandomNumber();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        '/api/random-numbers',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ min: 50, max: 100 }),
+        },
+      );
+    });
+
+    it('return newly created random number entry', async () => {
+      setUpMockFetch(successResolvedValue);
+
+      const result = await addRandomNumber();
+
+      expect(result).toMatchObject({ id: 1, value: 50 });
+    });
+
+    it('returns undefined when request fails', async () => {
+      setUpMockFetch({
+        ok: false,
+        status: 500,
+        statusText: 'Mock fail error',
+      });
+
+      const result = await addRandomNumber();
+
+      expect(result).toBe(undefined);
     });
   });
 });
