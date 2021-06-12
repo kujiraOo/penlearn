@@ -54,7 +54,7 @@ describe('/random-numbers', () => {
     afterAll(() => resetDb(dbPool));
 
     test('creates a new random number entry', async () => {
-      const { body: { randomNumber } } = await request
+      const { body: randomNumber } = await request
         .post('/api/random-numbers')
         .send({ min: 10, max: 20 })
         .expect(200);
@@ -112,7 +112,7 @@ describe('/random-numbers', () => {
           value: 12,
         }),
       );
-      const { body: { randomNumber: randomNumberAfter } } = await request
+      const { body: randomNumberAfter } = await request
         .put(`/api/random-numbers/${randomNumberBefore.id}`)
         .send({ min: 66, max: 33, value: 15 })
         .expect(200);
