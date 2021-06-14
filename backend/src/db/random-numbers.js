@@ -16,7 +16,7 @@ module.exports = {
     text: sql`
       select id, min, max, value, created_at, updated_at
       from random_numbers
-      where id = $1
+      where id = $1 and not deleted 
     `,
 
     values: [id],
@@ -29,11 +29,23 @@ module.exports = {
     text: sql`
       update random_numbers
       set min = $1, max = $2, value = $3 
-      where id = $4
+      where id = $4 and not deleted 
       returning min, max, value, id, created_at, updated_at
     `,
 
     values: [min, max, value, id],
+
+  }),
+
+  delete: (id) => ({
+    text: sql`
+      update random_numbers
+      set deleted = true 
+      where id = $1 and not deleted 
+      returning id, deleted
+    `,
+
+    values: [id],
 
   }),
 };

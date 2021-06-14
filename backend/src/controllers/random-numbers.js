@@ -73,6 +73,27 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     ctx.body = randomNumber;
   })
+  .delete('/:id', async (ctx) => {
+    validate(
+      Joi.object({
+        id: Joi.number().required(),
+      }),
+      ctx.params,
+      ctx,
+    );
+
+    const { id } = ctx.params;
+
+    const query = randomNumbers.delete(
+      id,
+    );
+
+    const { rows: [randomNumber] } = await ctx.dbPool.query(query);
+
+    if (!randomNumber) ctx.throw(404, 'Not found');
+
+    ctx.status = 204;
+  })
   .post('/', async (ctx) => {
     const { error } = Joi.object({
       min: Joi.number().required(),
