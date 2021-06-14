@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
+  lint-backend:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,13 +16,21 @@ jobs:
       run: npm ci
     - working-directory: ./backend
       run: npm run lint
-    - working-directory: ./frontend
-      run: npm ci
-    - working-directory: ./frontend
-      run: npm run lint
 
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - run: docker-compose -f docker-compose.test.yml run test-ci
+
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - working-directory: ./frontend
+      run: npm ci
+    - working-directory: ./frontend
+      run: npm run lint
