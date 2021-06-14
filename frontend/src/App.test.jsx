@@ -5,6 +5,6 @@ import App from './App';
 
 test('renders Random Wars heading', () => {
   render(<App />);
-  const heading = screen.getByText('Random Wars');
+  const heading = screen.getByText('pvp')
   expect(heading).toBeInTheDocument();
 });
