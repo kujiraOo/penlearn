@@ -71,7 +71,7 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     if (!randomNumber) ctx.throw(404, 'Not found');
 
-    ctx.body = { randomNumber };
+    ctx.body = randomNumber;
   })
   .post('/', async (ctx) => {
     const { error } = Joi.object({
@@ -91,5 +91,5 @@ module.exports = new Router({ prefix: '/random-numbers' })
 
     const { rows: [randomNumber] } = await ctx.dbPool.query(query);
 
-    ctx.body = { randomNumber };
+    ctx.body = randomNumber;
   });
