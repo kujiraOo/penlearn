@@ -240,4 +240,50 @@ describe('/random-numbers', () => {
       expect(response.text).toBe('Not found');
     });
   });
+
+  describe('DELETE /random-numbers/:id', () => {
+    let randomNumber;
+    beforeAll(async () => {
+      const data = {
+        min: 1000,
+        max: 2000,
+        value: 1111,
+      };
+      const { rows } = await dbPool.query(
+        randomNumbers.insert(data),
+      );
+      [randomNumber] = rows;
+    });
+    afterAll(() => resetDb(dbPool));
+
+    test('returns an id and deleted status', async () => {
+      await request
+        .delete(`/api/random-numbers/${randomNumber.id}`)
+        .expect(204);
+    });
+
+    test('requires id to be a number', async () => {
+      const response = await request
+        .delete('/api/random-numbers/putin')
+        .expect(400);
+
+      expect(response.text).toBe('"id" must be a number');
+    });
+
+    test('returns 404 if entry with specified id not found', async () => {
+      const response = await request
+        .delete('/api/random-numbers/9999')
+        .expect(404);
+
+      expect(response.text).toBe('Not found');
+    });
+
+    test('returns 404 if entry with specified id already deleted', async () => {
+      const response = await request
+        .delete('/api/random-numbers/1')
+        .expect(404);
+
+      expect(response.text).toBe('Not found');
+    });
+  });
 });
