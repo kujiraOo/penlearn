@@ -32,8 +32,4 @@ const post = (path, body) => request({
 
 export const getRandomNumbers = () => get('random-numbers');
 
-export const addRandomNumber = async () => {
-  const response = await post('random-numbers', { min: 50, max: 100 });
-
-  return response?.randomNumber;
-};
+export const addRandomNumber = () => post('random-numbers', { min: 50, max: 100 });
