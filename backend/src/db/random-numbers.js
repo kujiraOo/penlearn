@@ -10,7 +10,7 @@ module.exports = {
     values: [min, max, value],
   }),
 
-  selectAll: sql`select id, value from random_numbers`,
+  selectAll: sql`select id, value from random_numbers where not deleted`,
 
   select: (id) => ({
     text: sql`

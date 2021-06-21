@@ -1,6 +1,13 @@
 const randomNumbers = require('../db/random-numbers');
 const { resetDb } = require('../test/db');
 const setUpSupertest = require('../test/set-up-supertest');
+const { sql } = require('../db/helpers');
+
+const insertDeleted = sql`
+    insert into random_numbers (min, max, value, deleted)
+      values (1, 2, 3, true)
+      returning id
+  `;
 
 describe('/random-numbers', () => {
   const { request, tearDown, dbPool } = setUpSupertest();
@@ -14,7 +21,7 @@ describe('/random-numbers', () => {
   });
 
   describe('GET /random-numbers', () => {
-    afterAll(() => resetDb(dbPool));
+    afterEach(() => resetDb(dbPool));
 
     test('returns all entries from random_numbers table', async () => {
       const { rows: [randomNumber1] } = await dbPool.query(
@@ -48,10 +55,20 @@ describe('/random-numbers', () => {
         },
       ]);
     });
+
+    test('does not include deleted number in the response', async () => {
+      await dbPool.query(insertDeleted);
+
+      const { body } = await request
+        .get('/api/random-numbers')
+        .expect(200);
+
+      expect(body).toMatchObject([]);
+    });
   });
 
   describe('POST /random-numbers', () => {
-    afterAll(() => resetDb(dbPool));
+    afterEach(() => resetDb(dbPool));
 
     test('creates a new random number entry', async () => {
       const { body: randomNumber } = await request
@@ -102,7 +119,7 @@ describe('/random-numbers', () => {
   });
 
   describe('PUT /random-numbers/:id', () => {
-    afterAll(() => resetDb(dbPool));
+    afterEach(() => resetDb(dbPool));
 
     test('updates an existing random-number entry', async () => {
       const { rows: [randomNumberBefore] } = await dbPool.query(
@@ -123,6 +140,15 @@ describe('/random-numbers', () => {
       expect(randomNumberAfter.value).toBe(15);
       expect(typeof randomNumberAfter.created_at).toBe('string');
       expect(randomNumberAfter.updated_at).not.toBe(randomNumberBefore.updated_at);
+    });
+
+    test('returns 404 if random number is deleted', async () => {
+      const { rows: [deletedNumber] } = await dbPool.query(insertDeleted);
+
+      await request
+        .put(`/api/random-numbers/${deletedNumber.id}`)
+        .send({ min: 66, max: 33, value: 15 })
+        .expect(404);
     });
 
     test('requires min value in request body', async () => {
@@ -199,7 +225,7 @@ describe('/random-numbers', () => {
   });
 
   describe('GET /random-numbers/:id', () => {
-    afterAll(() => resetDb(dbPool));
+    afterEach(() => resetDb(dbPool));
 
     test('returns an existing entry', async () => {
       const data = {
@@ -239,6 +265,14 @@ describe('/random-numbers', () => {
 
       expect(response.text).toBe('Not found');
     });
+
+    test('returns 404 if random number is deleted', async () => {
+      const { rows: [deletedNumber] } = await dbPool.query(insertDeleted);
+
+      await request
+        .get(`/api/random-numbers/${deletedNumber.id}`)
+        .expect(404);
+    });
   });
 
   describe('DELETE /random-numbers/:id', () => {
@@ -254,9 +288,9 @@ describe('/random-numbers', () => {
       );
       [randomNumber] = rows;
     });
-    afterAll(() => resetDb(dbPool));
+    afterEach(() => resetDb(dbPool));
 
-    test('returns an id and deleted status', async () => {
+    test('returns 204 on success', async () => {
       await request
         .delete(`/api/random-numbers/${randomNumber.id}`)
         .expect(204);
@@ -280,7 +314,7 @@ describe('/random-numbers', () => {
 
     test('returns 404 if entry with specified id already deleted', async () => {
       const response = await request
-        .delete('/api/random-numbers/1')
+        .delete(`/api/random-numbers/${randomNumber.id}`)
         .expect(404);
 
       expect(response.text).toBe('Not found');
