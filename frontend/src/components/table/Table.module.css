@@ -1,0 +1,18 @@
+.table {
+  margin: 64px auto 64px;
+  width: 75%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table tr {
+  border-bottom: 1px solid #cecedd;
+}
+
+.table td, th {
+  padding: 8px;
+}
+
+.table th {
+  text-align: left;
+}
