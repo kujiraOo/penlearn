@@ -4,6 +4,7 @@ import { getRandomNumbers, addRandomNumber } from '../utils/client';
 import Table from '../components/table/Table';
 import Button from '../components/button/Button';
 import FlexContainer from '../components/flex-container/FlexContainer';
+import RandomNumberInput from './random-number-input/RandomNumberInput';
 
 const Main = () => {
   const [randomNumbers, setRandomNumbers] = useState([]);
@@ -32,8 +33,12 @@ const Main = () => {
       />
       <FlexContainer>
         <Button onClick={onButtonClick}>
-          Random number!
+          Wrong Random number!
         </Button>
+      </FlexContainer>
+      <hr />
+      <FlexContainer>
+        <RandomNumberInput />
       </FlexContainer>
     </>
   );
