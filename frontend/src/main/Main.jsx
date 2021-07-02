@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { getRandomNumbers, addRandomNumber } from '../utils/client';
 import Table from '../components/table/Table';
-import Button from '../components/button/Button';
 import FlexContainer from '../components/flex-container/FlexContainer';
-import RandomNumberInput from './random-number-input/RandomNumberInput';
+import RandomNumberForm from './random-number-form/RandomNumberForm';
 
 const Main = () => {
   const [randomNumbers, setRandomNumbers] = useState([]);
@@ -19,12 +18,11 @@ const Main = () => {
     fetchRandomNumbers();
   }, []);
 
-  const onButtonClick = async () => {
-    const randomNumber = await addRandomNumber();
+  const handleRandomNumberSubmit = async (options) => {
+    const randomNumber = await addRandomNumber(options);
 
     setRandomNumbers([...randomNumbers, randomNumber]);
   };
-
   return (
     <>
       <Table
@@ -32,13 +30,7 @@ const Main = () => {
         data={randomNumbers}
       />
       <FlexContainer>
-        <Button onClick={onButtonClick}>
-          Wrong Random number!
-        </Button>
-      </FlexContainer>
-      <hr />
-      <FlexContainer>
-        <RandomNumberInput />
+        <RandomNumberForm onSubmit={handleRandomNumberSubmit} />
       </FlexContainer>
     </>
   );

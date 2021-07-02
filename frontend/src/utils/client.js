@@ -32,4 +32,4 @@ const post = (path, body) => request({
 
 export const getRandomNumbers = () => get('random-numbers');
 
-export const addRandomNumber = () => post('random-numbers', { min: 50, max: 100 });
+export const addRandomNumber = (options) => post('random-numbers', options);
