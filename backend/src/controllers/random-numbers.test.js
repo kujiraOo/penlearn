@@ -13,7 +13,7 @@ describe('/random-numbers', () => {
   const { request, tearDown, dbPool } = setUpSupertest();
 
   beforeAll(() => resetDb(dbPool));
-
+  afterEach(() => resetDb(dbPool));
   afterAll(async () => {
     await resetDb(dbPool);
 
@@ -21,8 +21,6 @@ describe('/random-numbers', () => {
   });
 
   describe('GET /random-numbers', () => {
-    afterEach(() => resetDb(dbPool));
-
     test('returns all entries from random_numbers table', async () => {
       const { rows: [randomNumber1] } = await dbPool.query(
         randomNumbers.insert({
@@ -68,8 +66,6 @@ describe('/random-numbers', () => {
   });
 
   describe('POST /random-numbers', () => {
-    afterEach(() => resetDb(dbPool));
-
     test('creates a new random number entry', async () => {
       const { body: randomNumber } = await request
         .post('/api/random-numbers')
@@ -119,8 +115,6 @@ describe('/random-numbers', () => {
   });
 
   describe('PUT /random-numbers/:id', () => {
-    afterEach(() => resetDb(dbPool));
-
     test('updates an existing random-number entry', async () => {
       const { rows: [randomNumberBefore] } = await dbPool.query(
         randomNumbers.insert({
@@ -225,8 +219,6 @@ describe('/random-numbers', () => {
   });
 
   describe('GET /random-numbers/:id', () => {
-    afterEach(() => resetDb(dbPool));
-
     test('returns an existing entry', async () => {
       const data = {
         min: 1000,
@@ -277,18 +269,17 @@ describe('/random-numbers', () => {
 
   describe('DELETE /random-numbers/:id', () => {
     let randomNumber;
+    const data = {
+      min: 1000,
+      max: 2000,
+      value: 1111,
+    };
     beforeAll(async () => {
-      const data = {
-        min: 1000,
-        max: 2000,
-        value: 1111,
-      };
       const { rows } = await dbPool.query(
         randomNumbers.insert(data),
       );
       [randomNumber] = rows;
     });
-    afterEach(() => resetDb(dbPool));
 
     test('returns 204 on success', async () => {
       await request
@@ -313,6 +304,12 @@ describe('/random-numbers', () => {
     });
 
     test('returns 404 if entry with specified id already deleted', async () => {
+      const { rows } = await dbPool.query(
+        randomNumbers.insert(data),
+      );
+      [randomNumber] = rows;
+      await request
+        .delete(`/api/random-numbers/${randomNumber.id}`);
       const response = await request
         .delete(`/api/random-numbers/${randomNumber.id}`)
         .expect(404);
