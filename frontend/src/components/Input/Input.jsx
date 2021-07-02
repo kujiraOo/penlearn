@@ -6,7 +6,7 @@ import {
 
 const Input = ({ id, label, onChange }) => (
   <div>
-    <label htmlFor={id}>{label}</label>
+    <label>{label}</label>
     <input onChange={onChange} type="text" id={id} />
   </div>
 );
