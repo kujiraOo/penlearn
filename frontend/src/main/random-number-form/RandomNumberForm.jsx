@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { func } from 'prop-types';
 import Input from '../../components/Input/Input';
 import Button from '../../components/button/Button';
+import styles from './RandomNumberForm.module.css';
 
 const RandomNumberForm = ({ onSubmit }) => {
   const [min, setMin] = useState();
@@ -10,7 +11,7 @@ const RandomNumberForm = ({ onSubmit }) => {
   const handleMinChange = (event) => setMin(event.target.value);
   const handleMaxChange = (event) => setMax(event.target.value);
   return (
-    <div>
+    <div className={styles.randomNumberForm}>
       <Input onChange={handleMinChange} id="random-number-min-input" label="Min" />
       <Input onChange={handleMaxChange} id="random-number-max-input" label="Max" />
       <Button onClick={handleButtonClick}>

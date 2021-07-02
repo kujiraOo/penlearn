@@ -1,8 +1,8 @@
 .button {
   background-color: #0095da;
-  border: none;
+  border: 1px solid #BBBBBB;
   border-radius: 4px;
-  padding: 16px;
+  padding: 8px 16px;
   font-weight: bold;
   color: #fffdfa;
   font-size: 16px;

@@ -1,0 +1,8 @@
+.randomNumberForm {
+  display: flex;
+  align-items: center;
+}
+
+.randomNumberForm >*:not(:last-child) {
+  margin-right: 16px;
+}

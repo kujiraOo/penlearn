@@ -4,8 +4,10 @@ import {
   func,
 } from 'prop-types';
 
+import styles from './Input.module.css';
+
 const Input = ({ id, label, onChange }) => (
-  <div>
+  <div className={styles.input}>
     <label htmlFor={id}>{label}</label>
     <input onChange={onChange} type="text" id={id} />
   </div>
