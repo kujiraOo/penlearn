@@ -18,6 +18,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'react/jsx-props-no-spreading': 'off',
   },
   globals: {
     describe: 'readonly',
