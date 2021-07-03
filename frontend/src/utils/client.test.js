@@ -54,9 +54,7 @@ describe('client', () => {
   });
 
   describe('addRandomNumber', () => {
-    const successResponse = {
-      randomNumber: { id: 1, value: 50 },
-    };
+    const successResponse = { id: 1, value: 50 };
     const successResolvedValue = getSuccessResolvedValue(successResponse);
 
     it('calls fetch with correct parameters', async () => {
@@ -82,7 +80,7 @@ describe('client', () => {
       expect(result).toMatchObject({ id: 1, value: 50 });
     });
 
-    it('returns undefined when request fails', async () => {
+    it('returns null when request fails', async () => {
       setUpMockFetch({
         ok: false,
         status: 500,
@@ -91,7 +89,7 @@ describe('client', () => {
 
       const result = await addRandomNumber();
 
-      expect(result).toBe(undefined);
+      expect(result).toBe(null);
     });
   });
 });
