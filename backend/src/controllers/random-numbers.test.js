@@ -305,11 +305,14 @@ describe('/random-numbers', () => {
 
     test('returns 404 if entry with specified id already deleted', async () => {
       const { rows } = await dbPool.query(
-        randomNumbers.insert(data),
+        randomNumbers.insert({
+          min: 1000,
+          max: 2000,
+          value: 1111,
+          deleted: true,
+        }),
       );
       [randomNumber] = rows;
-      await request
-        .delete(`/api/random-numbers/${randomNumber.id}`);
       const response = await request
         .delete(`/api/random-numbers/${randomNumber.id}`)
         .expect(404);
