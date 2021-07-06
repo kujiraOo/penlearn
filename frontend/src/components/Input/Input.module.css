@@ -16,3 +16,7 @@
 .input input:focus-visible {
   outline-width: 0;
 }
+
+.input.error input {
+  border: 1px solid #FF2020;
+}
