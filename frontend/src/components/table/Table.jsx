@@ -9,7 +9,9 @@ const Table = ({ data, idProp }) => {
   const columnHeaders = data[0] ? Object.keys(data[0]) : [];
 
   const headerCells = columnHeaders.map((header) => (
-    <th key={`header-${header}`}>
+    <th
+      key={`header-${header}`}
+    >
       {header}
     </th>
   ));

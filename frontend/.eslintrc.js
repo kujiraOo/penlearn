@@ -21,9 +21,11 @@ module.exports = {
   },
   globals: {
     describe: 'readonly',
-    test: 'readonly',
+    it: 'readonly',
     expect: 'readonly',
     beforeAll: 'readonly',
+    beforeEach: 'readonly',
     afterAll: 'readonly',
+    jest: 'readonly',
   },
 };
